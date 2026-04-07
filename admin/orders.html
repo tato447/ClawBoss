@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订阅与算力账单 - 龙虾直聘后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <div class="admin-layout animate-in">
+        <div id="admin-sidebar-container"></div>
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>订阅与算力账单</h1>
+                    <p class="text-muted text-sm mt-1">Platform Financial Orders</p>
+                </div>
+                <div id="navbar-container" style="position: static; width: auto; border:none; background:none;"></div>
+            </div>
+
+            <div class="card mb-6 border-blue-500/30 bg-gradient-to-r from-[rgba(37,99,235,0.1)] to-transparent">
+                <div class="flex flex-col md:flex-row gap-8 justify-between items-center">
+                    <div>
+                        <div class="text-sm text-blue-400 font-bold mb-1">平台累计流水</div>
+                        <div class="text-3xl font-extrabold text-white font-mono" id="total-revenue">￥0.00</div>
+                    </div>
+                    <div class="w-px h-12 bg-[rgba(255,255,255,0.1)] hidden md:block"></div>
+                    <div>
+                        <div class="text-sm text-purple-400 font-bold mb-1">预计平台抽成 (15%)</div>
+                        <div class="text-3xl font-extrabold text-white font-mono" id="total-profit">￥0.00</div>
+                    </div>
+                    <div class="w-px h-12 bg-[rgba(255,255,255,0.1)] hidden md:block"></div>
+                    <div>
+                        <div class="text-sm text-emerald-400 font-bold mb-1">应结开发者分润</div>
+                        <div class="text-3xl font-extrabold text-white font-mono" id="total-payout">￥0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-lg font-bold text-white mb-6">全部明细账单</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>交易流水号</th>
+                                <th>付款方 (客户)</th>
+                                <th>雇佣对象及收款方 (开发者)</th>
+                                <th>订单金额</th>
+                                <th>平台抽成</th>
+                                <th>状态</th>
+                                <th>交易时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-list">
+                            <!-- JS渲染 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Admin.requireAdmin()) return;
+            Admin.renderSidebar('orders');
+            Components.renderNavbar('../');
+            
+            await loadOrdersData();
+        });
+
+        async function loadOrdersData() {
+            try {
+                const orders = await Store.get('orders');
+                const users = await Store.get('users');
+                const skills = await Store.get('skills');
+                const sysinfo = await Store.get('sysinfo') || { platformFeeRate: 0.15 };
+
+                // 账单统计
+                const totalRev = orders.reduce((sum, o) => sum + (o.price || 0), 0);
+                const totalProfit = totalRev * sysinfo.platformFeeRate;
+                const totalPayout = totalRev - totalProfit;
+
+                document.getElementById('total-revenue').innerText = Components.formatMoney(totalRev);
+                document.getElementById('total-profit').innerText = Components.formatMoney(totalProfit);
+                document.getElementById('total-payout').innerText = Components.formatMoney(totalPayout);
+
+                // 渲染列表
+                const container = document.getElementById('orders-list');
+                if(orders.length === 0) {
+                    container.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-8">无账单记录</td></tr>';
+                    return;
+                }
+
+                // 倒序
+                const sorted = [...orders].sort((a,b) => b.created - a.created);
+                let html = '';
+
+                sorted.forEach(o => {
+                    const buyer = users.find(u => u.id === o.userId) || { name: '未知' };
+                    const skill = skills.find(s => s.id === o.skillId) || { name: '未知', developerId: null };
+                    const developer = users.find(u => u.id === skill.developerId) || { name: '平台/未知' };
+
+                    const fee = o.price * sysinfo.platformFeeRate;
+
+                    html += `
+                    <tr>
+                        <td class="font-mono text-xs text-slate-500">${o.id}</td>
+                        <td><span class="text-white">${buyer.name}</span></td>
+                        <td>
+                            <div class="text-sm font-bold text-blue-400">${skill.name}</div>
+                            <div class="text-xs text-slate-400">所属: ${developer.name}</div>
+                        </td>
+                        <td class="font-mono text-white text-lg">￥${o.price}</td>
+                        <td class="font-mono text-emerald-400">+￥${fee.toFixed(2)}</td>
+                        <td><span class="badge badge-green">结算完成</span></td>
+                        <td class="text-xs text-slate-400">${Components.formatDate(o.created)}</td>
+                    </tr>`;
+                });
+
+                container.innerHTML = html;
+                lucide.createIcons();
+
+            } catch(e) { console.error(e); }
+        }
+    </script>
+</body>
+</html>

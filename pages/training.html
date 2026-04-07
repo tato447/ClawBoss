@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 实战营 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content bg-[#0B101E] w-full min-h-screen relative overflow-hidden pb-32">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[rgba(16,185,129,0.15)] blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="container relative z-10 pt-10">
+            <!-- ========== SECTION 1: HERO ========== -->
+            <div class="text-center mb-16 animate-in">
+                <div class="inline-flex items-center gap-3 mb-8">
+                    <span class="px-4 py-1.5 bg-emerald-900/40 text-emerald-400 border border-emerald-500/30 rounded-full text-sm font-bold tracking-widest">ZEELIN 智灵动力</span>
+                    <span class="px-4 py-1.5 bg-amber-900/40 text-amber-500 border border-amber-500/30 rounded-full text-sm font-bold tracking-widest">闭门高阶局</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+                    <span class="text-white">OpenClaw</span><br/>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400">3天2夜 线下实战营</span>
+                </h1>
+                
+                <p class="text-2xl text-slate-300 font-medium mb-2">手把手教你<span class="text-emerald-400">“养龙虾”</span></p>
+                <p class="text-2xl text-slate-300 font-medium mb-10 tracking-widest">重塑企业数字生产力</p>
+
+                <div class="max-w-3xl mx-auto bg-slate-800/40 border-l-4 border-emerald-500 p-8 text-left mb-12 rounded-r-xl shadow-lg border-y border-r border-y-slate-700/50 border-r-slate-700/50">
+                    <p class="text-xl text-emerald-400 font-bold mb-3">在这个技术指数级爆发的时代</p>
+                    <p class="text-slate-300 text-lg leading-relaxed">最大的风险是对新技术视而不见。<br>拒绝纸上谈兵，现场交付企业级 AI 专属龙虾员工。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+                    <div class="bg-slate-800/60 border border-slate-700 p-8 rounded-2xl shadow-xl hover:-translate-y-1 transition text-center">
+                        <div class="text-5xl font-black text-emerald-400 mb-3 tracking-tighter">3天2夜</div>
+                        <div class="text-slate-300 font-medium">沉浸式闭门实战</div>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 p-8 rounded-2xl shadow-xl hover:-translate-y-1 transition text-center">
+                        <div class="text-5xl font-black text-cyan-400 mb-3 tracking-tighter">5名</div>
+                        <div class="text-slate-300 font-medium">AI 龙虾员工交付</div>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700 p-8 rounded-2xl shadow-xl hover:-translate-y-1 transition text-center">
+                        <div class="text-5xl font-black text-amber-500 mb-3 tracking-tighter">1V1</div>
+                        <div class="text-slate-300 font-medium">企业诊断报告</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4 mb-16">
+                    <span class="px-5 py-2.5 text-slate-300 rounded-full shadow border-2 border-slate-700 bg-slate-800 font-medium"><span class="mr-2">🏢</span> 中小企业老板</span>
+                    <span class="px-5 py-2.5 text-slate-300 rounded-full shadow border-2 border-slate-700 bg-slate-800 font-medium"><span class="mr-2">👨‍💼</span> 团队 Leader</span>
+                    <span class="px-5 py-2.5 text-slate-300 rounded-full shadow border-2 border-slate-700 bg-slate-800 font-medium"><span class="mr-2">🚀</span> 超级个体</span>
+                    <span class="px-5 py-2.5 text-slate-300 rounded-full shadow border-2 border-slate-700 bg-slate-800 font-medium"><span class="mr-2">💡</span> 创业者</span>
+                </div>
+
+                <div class="max-w-2xl mx-auto bg-white rounded-[40px] p-2 pt-0 shadow-2xl relative overflow-hidden">
+                    <div class="h-3 w-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 absolute top-0 left-0"></div>
+                    <div class="p-10 flex flex-col md:flex-row items-center justify-between gap-8 pt-12">
+                        <div class="text-left flex-1">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span class="bg-rose-500 text-white px-4 py-1.5 rounded-full text-sm font-bold">限时首发特惠</span>
+                                <span class="text-slate-400 line-through text-lg font-medium">日常面授原价 ¥4980</span>
+                            </div>
+                            <div class="flex items-baseline text-rose-500 mb-2">
+                                <span class="text-5xl font-bold mr-2">¥</span>
+                                <span class="text-8xl font-black tracking-tighter">1980</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center border-2 border-dashed border-slate-300 rounded-3xl p-6 bg-slate-50 min-w-[220px]">
+                            <div class="w-28 h-28 bg-white border border-slate-200 rounded-2xl flex items-center justify-center mb-4 shadow-sm p-4">
+                                <img src="../assets/logo.png" class="w-full h-full object-contain opacity-50 grayscale" alt="qrcode placeholder">
+                            </div>
+                            <div class="font-bold text-slate-800 text-center text-lg">扫码联系专属顾问</div>
+                            <div class="text-slate-500 text-sm mt-1">即刻锁定稀缺名额</div>
+                        </div>
+                    </div>
+                    <div class="w-full bg-[#0F172A] text-blue-300 font-bold text-xl py-6 rounded-b-[38px] text-center tracking-wide">
+                        包含 3天2夜 全套实战精讲与系统交付
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SECTION 2: 痛点与引擎 ========== -->
+            <div class="max-w-4xl mx-auto mb-20 animate-in animate-delay-1">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-2 h-10 bg-rose-500 rounded-full"></div>
+                    <div>
+                        <h2 class="text-3xl font-bold text-white">企业为何深陷效率泥沼？</h2>
+                        <p class="text-slate-400 mt-2 text-lg">跨越认知鸿沟，看清被落下的真相</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 mb-20">
+                    <div class="bg-slate-800/40 p-8 rounded-3xl border border-slate-700/50 flex flex-col md:flex-row items-center gap-8 shadow-lg">
+                        <div class="text-7xl font-black text-rose-500 w-48 text-center shrink-0 tracking-tighter">80<span class="text-4xl">%</span></div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3">团队精力被基础事务蚕食</h3>
+                            <p class="text-slate-400 text-lg leading-relaxed">员工深陷数据整理、客服答疑、文案搬运等重复劳动，核心业务创新全面停滞。</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/40 p-8 rounded-3xl border border-slate-700/50 flex flex-col md:flex-row items-center gap-8 shadow-lg">
+                        <div class="text-7xl font-black text-white w-48 text-center shrink-0 tracking-tighter">10<span class="text-4xl text-slate-400">x</span></div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-3">AI 化企业的效率代差</h3>
+                            <p class="text-slate-400 text-lg leading-relaxed">您的竞争对手正在利用智能体实现 7x24 小时全天候无休运转，人效差距指数级裂变。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-2 h-10 bg-emerald-500 rounded-full"></div>
+                    <h2 class="text-3xl font-bold text-white">底层核心技术引擎</h2>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mb-20">
+                    <span class="px-6 py-3 rounded-xl border border-emerald-900 bg-emerald-950/50 text-emerald-400 font-medium text-lg shadow-inner">OpenClaw 中枢架构</span>
+                    <span class="px-6 py-3 rounded-xl border border-blue-900 bg-blue-950/50 text-blue-400 font-medium text-lg shadow-inner">大模型私有化接入</span>
+                    <span class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 font-medium text-lg shadow-inner">企业级知识库</span>
+                    <span class="px-6 py-3 rounded-xl border border-amber-900 bg-amber-950/50 text-amber-500 font-medium text-lg shadow-inner">全自动 AI 龙虾员工</span>
+                    <span class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 font-medium text-lg shadow-inner">飞书/微信生态集成</span>
+                </div>
+
+                <!-- ROI Card -->
+                <div class="bg-slate-800/30 rounded-[32px] p-10 border border-emerald-900/30 relative mt-20 shadow-2xl">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-amber-500/40 rounded-full px-8 py-3 text-amber-500 font-bold whitespace-nowrap shadow-[0_0_30px_rgba(245,158,11,0.15)] text-lg flex items-center gap-2">
+                        <i data-lucide="zap" class="w-5 h-5"></i> 与其高薪挖战术勤奋，不如一键升级战略武器
+                    </div>
+                    
+                    <h3 class="text-3xl font-bold text-white mt-10 mb-10 text-center tracking-wide">一顿饭的预算，<span class="text-emerald-400 border-b-2 border-emerald-400/50 pb-1">重构企业 ROI</span></h3>
+                    
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center py-5 border-b border-slate-700/50">
+                            <span class="text-slate-400 text-xl font-medium">外聘技术工程师薪资</span>
+                            <span class="text-white font-medium text-xl">超 <span class="font-bold">30万</span>/年</span>
+                        </div>
+                        <div class="flex justify-between items-center py-5 border-b border-slate-700/50">
+                            <span class="text-slate-400 text-xl font-medium">自行摸索试错成本</span>
+                            <span class="text-white font-medium text-xl"><span class="font-bold">3-6 个月</span>极高风险</span>
+                        </div>
+                        <div class="flex justify-between items-center py-6 mt-4">
+                            <span class="text-emerald-400 font-bold text-2xl">线下营带走 5名龙虾员工</span>
+                            <span class="text-rose-500 font-black text-4xl">仅需 1980元</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SECTION 3: CORE DELIVERABLES ========== -->
+            <div class="max-w-4xl mx-auto mb-28 animate-in mt-32">
+                <div class="text-center mb-16">
+                    <div class="inline-block px-5 py-2 rounded-full bg-emerald-950 border border-emerald-900 text-emerald-500 text-sm font-bold tracking-widest mb-6">CORE DELIVERABLES</div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">线下尊享交付矩阵</h2>
+                    <p class="text-slate-400 text-xl">拒绝纸上谈兵，现场直接输出高优成果</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-slate-800/40 border border-emerald-900 p-8 md:p-10 rounded-3xl relative overflow-hidden group hover:border-emerald-500/50 transition duration-300">
+                        <div class="absolute left-0 top-0 bottom-0 w-2 bg-emerald-500"></div>
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><span class="text-emerald-500 font-black text-3xl">01.</span> 企业共享版一键配置</h3>
+                        <p class="text-slate-300 text-lg leading-relaxed ml-11">专家导师现场为您所在的企业，一键打通并完成“数字龙虾”引擎专属部署，实现全员无缝协同。</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/80 p-8 md:p-10 rounded-3xl relative overflow-hidden group hover:border-slate-500 transition duration-300">
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><span class="text-slate-500 font-black text-3xl group-hover:text-slate-400 transition">02.</span> 现场赠送 5名 AI 龙虾员工</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed ml-11">交付5个高阶通用型龙虾员工（覆盖文案、数据、管理等），即插即用，零门槛直接上岗干活。</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/80 p-8 md:p-10 rounded-3xl relative overflow-hidden group hover:border-slate-500 transition duration-300">
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><span class="text-slate-500 font-black text-3xl group-hover:text-slate-400 transition">03.</span> 1V1 数字化转型诊断报告</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed ml-11">经过实地沟通调研，深度剖析商业卡点，出具一份专属定制的企业 AI 提效重塑诊断报告。</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/80 p-8 md:p-10 rounded-3xl relative overflow-hidden group hover:border-slate-500 transition duration-300">
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><span class="text-slate-500 font-black text-3xl group-hover:text-slate-400 transition">04.</span> 专属私有业务闭门指导</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed ml-11">针对内部独有业务流与私有化数据开展专项研讨。手把手指导系统融合，打造竞争壁垒。</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-slate-700/80 p-8 md:p-10 rounded-3xl relative overflow-hidden group hover:border-slate-500 transition duration-300">
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><span class="text-slate-500 font-black text-3xl group-hover:text-slate-400 transition">05.</span> 高质量企业家实战圈</h3>
+                        <p class="text-slate-400 text-lg leading-relaxed ml-11">严格筛选同频校友。结营后自动加入专属闭门圈，获取技术更新，沉淀顶尖商业人脉资源。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SECTION 4: SCHEDULE ========== -->
+            <div class="max-w-4xl mx-auto mb-28 animate-in">
+                <div class="text-center mb-16">
+                    <div class="inline-block px-5 py-2 rounded-full bg-cyan-950 border border-cyan-900 text-cyan-400 text-sm font-bold tracking-widest mb-6">SCHEDULE</div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">3天2夜 闭门行程安排</h2>
+                    <p class="text-slate-400 text-xl">高强度认知输入，保姆级实操输出</p>
+                </div>
+
+                <div class="relative border-l-2 border-slate-700 ml-4 md:ml-10 space-y-12 py-4">
+                    
+                    <div class="relative pl-10 md:pl-16">
+                        <div class="absolute -left-[13px] top-6 w-6 h-6 rounded-full bg-[#0B101E] border-4 border-emerald-400"></div>
+                        <div class="bg-slate-800/50 p-8 md:p-10 rounded-3xl border border-slate-700/80 shadow-lg">
+                            <div class="text-emerald-400 font-bold mb-2 tracking-widest text-sm">DAY 01</div>
+                            <h3 class="text-3xl font-bold text-white mb-6">认知破局与底层部署</h3>
+                            <div class="space-y-4">
+                                <p class="text-slate-300 text-lg"><strong class="text-white mr-2">白天实战:</strong> 重构生产力认知，指导环境搭建与模型配置。</p>
+                                <p class="text-emerald-300 text-lg"><strong class="text-emerald-400 mr-2">闭门夜话:</strong> 破冰交流与业务痛点收集，企业初诊。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-10 md:pl-16">
+                        <div class="absolute -left-[13px] top-6 w-6 h-6 rounded-full bg-[#0B101E] border-4 border-cyan-400"></div>
+                        <div class="bg-slate-800/50 p-8 md:p-10 rounded-3xl border border-slate-700/80 shadow-lg">
+                            <div class="text-cyan-400 font-bold mb-2 tracking-widest text-sm">DAY 02</div>
+                            <h3 class="text-3xl font-bold text-white mb-6">核心场景与专属定制</h3>
+                            <div class="space-y-4">
+                                <p class="text-slate-300 text-lg"><strong class="text-white mr-2">白天实战:</strong> 拆解高频工作流，实操搭建并测试龙虾员工。</p>
+                                <p class="text-cyan-300 text-lg"><strong class="text-cyan-400 mr-2">闭门夜话:</strong> 针对企业私域与内部协同痛点，闭门指导。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-10 md:pl-16">
+                        <div class="absolute -left-[13px] top-6 w-6 h-6 rounded-full bg-[#0B101E] border-4 border-purple-400"></div>
+                        <div class="bg-slate-800/50 p-8 md:p-10 rounded-3xl border border-slate-700/80 shadow-lg">
+                            <div class="text-purple-400 font-bold mb-2 tracking-widest text-sm">DAY 03</div>
+                            <h3 class="text-3xl font-bold text-white mb-6">成果验收与落地方案</h3>
+                            <div class="space-y-4">
+                                <p class="text-slate-300 text-lg"><strong class="text-white mr-2">最终交付:</strong> 完成引擎一键配置，交付5名AI员工，结营。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-16 bg-emerald-950/30 border border-emerald-900/50 rounded-[32px] p-10 text-center shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                    <h3 class="text-3xl font-bold text-emerald-400 flex justify-center items-center gap-3 mb-6">🎓 结营硬核输出</h3>
+                    <p class="text-slate-300 text-xl leading-relaxed mb-6">3天时间，不只带走思路，更带走<strong class="text-white mx-1 border-b border-white/30">全套搭建好的系统</strong>和<strong class="text-white mx-1 border-b border-white/30">能立刻干活的龙虾员工</strong></p>
+                    <p class="text-white font-bold text-2xl tracking-wide">周一回到公司，直接全员应用上线！</p>
+                </div>
+            </div>
+
+            <!-- ========== SECTION 5: 讲师团 ======== -->
+            <div class="max-w-4xl mx-auto mb-16 animate-in">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-2 h-10 bg-emerald-500 rounded-full"></div>
+                    <h2 class="text-3xl font-bold text-white">专家领航讲师团</h2>
+                </div>
+                
+                <div class="bg-slate-800/60 p-10 rounded-[32px] border border-slate-700/80 mb-20 shadow-xl">
+                    <div class="flex items-center gap-6 mb-10">
+                        <div class="p-5 bg-emerald-500 rounded-3xl text-white shadow-lg"><i data-lucide="users-2" class="w-10 h-10"></i></div>
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-2">智灵动力 官方教研专家团</h3>
+                            <p class="text-emerald-400 font-medium text-lg">官方认证教研与落地交付中枢</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="check-circle-2" class="text-emerald-400 w-6 h-6 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-200 text-xl">工信部认证前沿 AI 讲师阵容领衔</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="check-circle-2" class="text-emerald-400 w-6 h-6 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-200 text-xl">均具有头部大厂 AI 产品经理与架构师背景</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="check-circle-2" class="text-emerald-400 w-6 h-6 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-200 text-xl">操盘过百家大型企业级 AI 落地实战专家组</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i data-lucide="check-circle-2" class="text-emerald-400 w-6 h-6 shrink-0 mt-0.5"></i>
+                            <span class="text-slate-200 text-xl">助教全员随行 1V1 贴身辅导保障，确保落地不卡壳</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="w-2 h-10 bg-blue-500 rounded-full"></div>
+                    <h2 class="text-3xl font-bold text-white">谁最需要参加？</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-slate-800/40 p-8 rounded-3xl border border-slate-700 flex items-center gap-8 shadow-sm hover:bg-slate-800/60 transition">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-900/50 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-3xl font-black shrink-0">1</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">中小企业老板 / 创始人</h3>
+                            <p class="text-slate-400 text-lg">急需前沿 AI 释放潜力，实现降本增效破局。</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/40 p-8 rounded-3xl border border-slate-700 flex items-center gap-8 shadow-sm hover:bg-slate-800/60 transition">
+                        <div class="w-16 h-16 rounded-2xl bg-cyan-900/50 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-3xl font-black shrink-0">2</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">企业业务高管 / 团队 Leader</h3>
+                            <p class="text-slate-400 text-lg">肩负转型重任，需建立 AI 标准化工作流。</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/40 p-8 rounded-3xl border border-slate-700 flex items-center gap-8 shadow-sm hover:bg-slate-800/60 transition">
+                        <div class="w-16 h-16 rounded-2xl bg-purple-900/50 text-purple-400 border border-purple-500/30 flex items-center justify-center text-3xl font-black shrink-0">3</div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">渴望进阶的超级个体</h3>
+                            <p class="text-slate-400 text-lg">打破物理天花板，实现“一人公司”高效运转。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="text-center pt-24 mt-20 border-t border-slate-800/80 pb-10">
+                <div class="text-slate-400 font-bold tracking-[0.2em] mb-4 text-xl">OPENCLAW 赋能中心</div>
+                <div class="text-slate-500">© 2026 ZeeLin 智灵动力 | 拒绝纸上谈兵，用AI重塑增长</div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

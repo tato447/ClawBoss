@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙虾直聘 - 全球首个龙虾员工招聘平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="./index.html" class="navbar-logo">
+                <img src="./assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="./index.html" class="nav-link">首页</a>
+                <a href="./pages/marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./pages/custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden"
+                    onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" x2="20" y1="12" y2="12" />
+                        <line x1="4" x2="20" y1="6" y2="6" />
+                        <line x1="4" x2="20" y1="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="./index.html" class="nav-link">首页</a>
+            <a href="./pages/marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./pages/custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content">
+        <!-- Hero Section -->
+        <section class="hero container animate-in">
+            <div class="hero-tag">
+                <i data-lucide="sparkles"></i>
+                <span>别招人了，你的下一个超级员工是一只“龙虾”</span>
+            </div>
+            <h1>
+                全球首个<br />
+                <span class="gradient-text">龙虾员工</span> 招聘平台
+            </h1>
+            <p>
+                AI 驱动的龙虾员工，即招即用，开箱即战。<br />
+                0社保、0情绪、7×24小时全天候待命——今天入职，今天产出。
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+                <a href="./pages/marketplace.html" class="btn btn-primary btn-lg">
+                    浏览龙虾员工 <i data-lucide="chevron-right"></i>
+                </a>
+                <a href="./pages/custom.html" class="btn btn-secondary btn-lg">
+                    免费评估企业定制方案
+                </a>
+            </div>
+
+            <!-- 新增的理念金句 -->
+            <div
+                class="mt-20 max-w-3xl mx-auto border-t border-slate-800/80 pt-10 animate-in animate-delay-2 relative z-10">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0B101E] px-4 text-slate-600">
+                    <i data-lucide="quote" class="w-5 h-5"></i>
+                </div>
+                <p class="text-xl md:text-2xl font-medium text-slate-300 leading-relaxed tracking-wide"
+                    style="text-shadow: 0 4px 20px rgba(0,0,0,0.5)">
+                    “以前，别人会问：你的公司有多少<strong class="text-white">人</strong>？<br>
+                    未来，别人会问：<span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 font-bold">你的公司有多少龙虾员工？</span>”
+                </p>
+            </div>
+        </section>
+
+        <div class="container pb-4">
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 平台优势 -->
+        <section class="section container">
+            <div class="grid grid-3">
+                <div class="card card-hover text-center">
+                    <div class="icon-box icon-box-blue mx-auto mb-6" style="margin: 0 auto 24px;">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">即招即用，一键部署</h3>
+                    <p class="text-muted text-sm">无需复杂的代码集成，完美适配飞书、企业微信、钉钉等主流办公协同平台。</p>
+                </div>
+                <div class="card card-hover text-center">
+                    <div class="icon-box icon-box-purple mx-auto mb-6" style="margin: 0 auto 24px;">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">技能认证，杜绝幻觉</h3>
+                    <p class="text-muted text-sm">所有上架“龙虾”均经过严格的幻觉测试与业务流跑通验证，确保稳定输出。</p>
+                </div>
+                <div class="card card-hover text-center">
+                    <div class="icon-box icon-box-emerald mx-auto mb-6" style="margin: 0 auto 24px;">
+                        <i data-lucide="server"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">算力基座，按效付费</h3>
+                    <p class="text-muted text-sm">打破传统SaaS高昂年费，根据实际调用的 OpenClaw 算力灵活计费，降低90%人力成本。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 热门案例推荐 -->
+        <section class="section container">
+            <div class="section-header">
+                <h2>他们已经在为企业创造价值</h2>
+                <p>这些是由平台“养虾人”开发并验证成功的高绩效龙虾员工</p>
+                <div class="mt-6">
+                    <a href="./pages/marketplace.html" class="btn btn-ghost">在市场查看全部</a>
+                </div>
+            </div>
+
+            <div class="grid grid-3" id="hot-skills-container">
+                <!-- 由 JS 渲染 -->
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <!-- Footer (JS 动态渲染) -->
+
+    <script src="./js/store.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/components.js"></script>
+    <script src="./js/app.js"></script>
+
+    <script>
+        // 渲染热门 Skill
+        async function renderHotSkills() {
+            const container = document.getElementById('hot-skills-container');
+            const skills = await Store.getSkillsWithAuthor();
+            if (!skills || skills.length === 0) return;
+
+            // 取前3个
+            const hotSkills = skills.slice(0, 3);
+            let html = '';
+
+            const gradients = [
+                'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(20,184,166,0.1))',
+                'linear-gradient(135deg, rgba(37,99,235,0.1), rgba(99,102,241,0.1))',
+                'linear-gradient(135deg, rgba(124,58,237,0.1), rgba(217,70,239,0.1))'
+            ];
+
+            const badges = ['badge-green', 'badge-blue', 'badge-purple'];
+
+            hotSkills.forEach((c, index) => {
+                const skillsHtml = c.skills.map(s => `<span class="tag">${s}</span>`).join('');
+                const gradient = gradients[index % gradients.length];
+                const badge = badges[index % badges.length];
+
+                html += `
+                <div class="card card-hover flex flex-col relative" style="background: ${gradient};">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="icon-box" style="background:#0f172a; border: 1px solid rgba(255,255,255,0.1);">
+                            <i data-lucide="${c.icon}" style="color: #60a5fa;"></i>
+                        </div>
+                        <div class="badge ${badge} flex items-center gap-1">
+                            <span style="width:6px;height:6px;border-radius:50%;background:currentColor" class="animate-pulse"></span> 空闲可入职
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">${c.name}</h3>
+                    <p class="text-blue-400 font-medium text-sm mb-4">${c.title}</p>
+                    <div class="flex flex-wrap gap-2 mb-6">${skillsHtml}</div>
+                    <div class="mt-auto pt-4 border-t w-full flex justify-between items-center">
+                        <div class="price" style="font-size:20px;">免费</div>
+                        <a href="./pages/skill-detail.html?id=${c.id}" class="btn btn-sm btn-ghost">查看简历</a>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        renderHotSkills();
+    </script>
+</body>
+
+</html>

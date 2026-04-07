@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统全局配置 - 龙虾直聘后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <div class="admin-layout animate-in">
+        <div id="admin-sidebar-container"></div>
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>平台全局配置</h1>
+                    <p class="text-muted text-sm mt-1">System Settings & Parameters</p>
+                </div>
+                <div id="navbar-container" style="position: static; width: auto; border:none; background:none;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold text-white mb-6 border-b border-[rgba(255,255,255,0.05)] pb-4">
+                        核心参数配置
+                    </h3>
+                    
+                    <form id="settings-form" onsubmit="saveConfig(event)">
+                        <div class="form-group mb-6">
+                            <label class="form-label flex justify-between">
+                                <span>当前平台技术服务费率 (包含API算力)</span>
+                                <span class="text-blue-400 font-mono" id="rate-display">15%</span>
+                            </label>
+                            <div class="flex items-center gap-4">
+                                <input type="range" id="param-fee" min="0" max="50" step="1" value="15" 
+                                    class="w-full h-2 bg-[rgba(255,255,255,0.1)] rounded-lg appearance-none cursor-pointer"
+                                    oninput="document.getElementById('rate-display').innerText = this.value + '%'"
+                                >
+                            </div>
+                            <div class="form-hint mt-2">调整此参数将影响后续订单的平台抽成比例，历史订单不受影响。当前值：开发者拿走 <span id="dev-rate">85</span>%。</div>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label class="form-label">实名制认证策略</label>
+                            <select class="form-select">
+                                <option value="1">购买者和开发者均需实名 (严格模式)</option>
+                                <option value="2" selected>仅开发者提现需实名 (标准模式)</option>
+                                <option value="3">无需实名 (测试模式)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-8">
+                            <label class="form-label">OpenClaw 核心调度引擎地址</label>
+                            <input type="text" class="form-input font-mono" value="http://localhost:8080/api/v1/engine">
+                            <div class="form-hint">所有龙虾员工的大模型请求将路由至此算力网关。</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="btn-save">
+                            <i data-lucide="save"></i> 保存参数设置
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card bg-[rgba(239,68,68,0.02)] border-[rgba(239,68,68,0.1)] h-fit">
+                    <h3 class="text-xl font-bold text-red-500 mb-6 border-b border-[rgba(239,68,68,0.1)] pb-4 flex items-center gap-2">
+                        <i data-lucide="alert-triangle"></i> 危险操作区
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-white font-bold mb-1">清理测试数据</h4>
+                            <p class="text-xs text-muted mb-3">将清除所有用户、订单、上架记录的 LocalStorage 缓存，并重置为初始 Demo 状态。</p>
+                            <button class="btn btn-outline border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors" onclick="resetDatabase()">
+                                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> 重置模拟数据库
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Admin.requireAdmin()) return;
+            Admin.renderSidebar('settings');
+            Components.renderNavbar('../');
+
+            const sysinfo = await Store.get('sysinfo') || { platformFeeRate: 0.15 };
+            const rateInt = Math.round(sysinfo.platformFeeRate * 100);
+            
+            const slider = document.getElementById('param-fee');
+            slider.value = rateInt;
+            
+            // 触发一次视图更新
+            document.getElementById('rate-display').innerText = rateInt + '%';
+            document.getElementById('dev-rate').innerText = (100 - rateInt);
+
+            slider.addEventListener('input', (e) => {
+                document.getElementById('dev-rate').innerText = (100 - e.target.value);
+            });
+        });
+
+        async function saveConfig(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-save');
+            const oldText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mr-2 inline"></i> 保存中...';
+            btn.disabled = true;
+
+            const newRateInt = parseInt(document.getElementById('param-fee').value, 10);
+            
+            try {
+                await Store.set('sysinfo', { platformFeeRate: newRateInt / 100 });
+                setTimeout(() => {
+                    Toast.show('全局配置保存成功', 'success');
+                    btn.innerHTML = oldText;
+                    btn.disabled = false;
+                    lucide.createIcons({root: btn});
+                }, 800);
+            } catch(err) {
+                Toast.show('保存失败', 'error');
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+            }
+        }
+
+        function resetDatabase() {
+            if(confirm('警告：此操作不可逆！将会清除所有您刚刚创建的数据，并重置为初始状态。确定继续？')) {
+                localStorage.removeItem('lx_initialized');
+                localStorage.removeItem('lx_session');
+                Store.init();
+                Toast.show('数据库已重置，请重新登录', 'info');
+                setTimeout(() => window.location.href = './login.html', 1500);
+            }
+        }
+    </script>
+</body>
+</html>

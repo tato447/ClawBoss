@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运行监控大盘 - 龙虾直聘后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .chart-mock { height: 240px; display: flex; align-items: flex-end; gap: 8px; padding-top: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .chart-bar { flex: 1; background: rgba(37,99,235,0.2); border-top-left-radius: 4px; border-top-right-radius: 4px; position: relative; transition: height 1s ease; }
+        .chart-bar:hover { background: rgba(37,99,235,0.4); }
+        .chart-bar span { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #64748b; }
+    </style>
+</head>
+<body class="bg-glow">
+    <div class="admin-layout animate-in">
+        <!-- JS渲染侧边栏 -->
+        <div id="admin-sidebar-container"></div>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>运行监控大盘</h1>
+                    <p class="text-muted text-sm mt-1">Platform Dashboard / 数据更新时间: <span id="current-time"></span></p>
+                </div>
+                <div id="navbar-container" style="position: static; width: auto; border:none; background:none;">
+                    <!-- JS 渲染管理员下拉菜单 -->
+                </div>
+            </div>
+
+            <!-- 数据概览 -->
+            <div class="grid grid-4 mb-8">
+                <div class="stat-card">
+                    <div class="stat-label">总注册用户</div>
+                    <div class="stat-value" id="stat-users">0</div>
+                    <div class="stat-change flex items-center gap-1 up"><i data-lucide="trending-up" class="w-4 h-4"></i> +12 今日</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">上架龙虾员工</div>
+                    <div class="stat-value" id="stat-skills">0</div>
+                    <div class="stat-change flex items-center gap-1 up"><i data-lucide="trending-up" class="w-4 h-4"></i> +3 今日</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">总雇佣订单数</div>
+                    <div class="stat-value" id="stat-orders">0</div>
+                    <div class="stat-change flex items-center gap-1 up"><i data-lucide="trending-up" class="w-4 h-4"></i> +8 今日</div>
+                </div>
+                <div class="stat-card shadow-[0_0_30px_rgba(37,99,235,0.1)] border-blue-500/30">
+                    <div class="stat-label text-blue-400 font-bold">累计流水 (GMV)</div>
+                    <div class="stat-value" id="stat-revenue">￥0</div>
+                    <div class="stat-change flex items-center gap-1 up"><i data-lucide="trending-up" class="w-4 h-4"></i> +￥2,490 今日</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- 图表 -->
+                <div class="card lg:col-[span_2]">
+                    <h3 class="text-lg font-bold text-white mb-6">近7日 Token 消耗趋势 (亿)</h3>
+                    <div class="chart-mock">
+                        <div class="chart-bar" style="height: 30%"><span>03-20</span></div>
+                        <div class="chart-bar" style="height: 45%"><span>03-21</span></div>
+                        <div class="chart-bar" style="height: 40%"><span>03-22</span></div>
+                        <div class="chart-bar" style="height: 60%"><span>03-23</span></div>
+                        <div class="chart-bar" style="height: 80%"><span>03-24</span></div>
+                        <div class="chart-bar" style="height: 70%"><span>03-25</span></div>
+                        <div class="chart-bar" style="height: 95%; background: rgba(37,99,235,0.6)"><span>今日</span></div>
+                    </div>
+                </div>
+
+                <!-- 待办事项 -->
+                <div class="card">
+                    <h3 class="text-lg font-bold text-white mb-6">系统预警与待办</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.2)] flex gap-3">
+                            <i data-lucide="alert-triangle" class="text-yellow-500 w-5 h-5 shrink-0 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-yellow-400 mb-1">有 2 个新上架应用待审核</h4>
+                                <a href="skills.html" class="text-xs text-yellow-500 hover:underline">去处理 →</a>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-lg bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] flex gap-3">
+                            <i data-lucide="server" class="text-emerald-500 w-5 h-5 shrink-0 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-emerald-400 mb-1">算力集群运行正常</h4>
+                                <p class="text-xs text-emerald-500/70">节点负荷 42%，无宕机风险。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近订单 -->
+            <div class="card">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-bold text-white">最新成交流水</h3>
+                    <a href="orders.html" class="btn btn-sm btn-ghost">查看全部</a>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>雇主账号</th>
+                                <th>雇佣对象</th>
+                                <th>金额</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-orders">
+                            <!-- JS渲染 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Admin.requireAdmin()) return;
+            
+            Admin.renderSidebar('dashboard');
+            Components.renderNavbar('../'); // 渲染头部下拉框
+            
+            document.getElementById('current-time').innerText = Components.formatDate(Date.now());
+
+            await loadStats();
+        });
+
+        async function loadStats() {
+            try {
+                const users = await Store.get('users');
+                const skills = await Store.get('skills');
+                const orders = await Store.get('orders');
+
+                document.getElementById('stat-users').innerText = users.length;
+                document.getElementById('stat-skills').innerText = skills.length;
+                document.getElementById('stat-orders').innerText = orders.length;
+
+                const revenue = orders.reduce((sum, o) => sum + (o.price || 0), 0);
+                document.getElementById('stat-revenue').innerText = Components.formatMoney(revenue);
+
+                renderRecentOrders(orders, users, skills);
+
+            } catch(e) { console.error('Error loading stats:', e); }
+        }
+
+        function renderRecentOrders(orders, users, skills) {
+            const container = document.getElementById('recent-orders');
+            if(orders.length === 0) {
+                container.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">暂无数据</td></tr>';
+                return;
+            }
+
+            // 倒序，取前5
+            const recent = orders.sort((a,b) => b.created - a.created).slice(0, 5);
+            let html = '';
+            recent.forEach(o => {
+                const u = users.find(x => x.id === o.userId) || { username: '未知' };
+                const s = skills.find(x => x.id === o.skillId) || { name: '已删除' };
+                
+                html += `
+                <tr>
+                    <td class="font-mono text-xs text-slate-500">${o.id.substring(0,8)}</td>
+                    <td>${u.username}</td>
+                    <td class="text-blue-400 font-medium">${s.name}</td>
+                    <td class="text-emerald-400 font-bold">￥${o.price}</td>
+                    <td class="text-xs text-slate-400">${Components.formatDate(o.created)}</td>
+                </tr>`;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

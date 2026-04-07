@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙虾员工 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 animate-in">
+            <div>
+                <h1 class="text-4xl font-bold text-white mb-4">龙虾员工</h1>
+                <p class="text-muted text-lg">选择经过官方验证的龙虾员工，一键部署到您的企业微信、飞书或钉钉</p>
+            </div>
+            <div class="search-box w-full md:w-80">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="搜索岗位、技能或开发者...">
+            </div>
+        </div>
+
+        <!-- 筛选栏 -->
+        <div class="flex flex-col sm:flex-row justify-between items-center bg-[rgba(255,255,255,0.02)] p-4 rounded-xl border border-[rgba(255,255,255,0.05)] mb-8 animate-in animate-delay-1 gap-4">
+            <div class="tabs" style="margin: 0;">
+                <button class="tab-btn active" onclick="filterCategory('all', this)">推荐龙虾</button>
+                <button class="tab-btn" onclick="filterCategory('marketing', this)">营销/内容</button>
+                <button class="tab-btn" onclick="filterCategory('service', this)">客户服务</button>
+                <button class="tab-btn" onclick="filterCategory('data', this)">数据分析</button>
+                <button class="tab-btn" onclick="filterCategory('design', this)">视觉设计</button>
+                <button class="tab-btn" onclick="filterCategory('dev', this)">研发测试</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-muted">排序:</span>
+                <select id="sort-select" class="form-select w-32" style="padding: 6px 12px;" onchange="sortSkills(this.value)">
+                    <option value="latest">最新上架</option>
+                    <option value="hot">销量最高</option>
+                    <option value="price_asc">价格最低</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 骨架屏 / 加载状态 -->
+        <div id="loading" class="text-center py-20 text-muted">
+            <i data-lucide="loader-2" class="w-8 h-8 animate-pulse mx-auto mb-4"></i>
+            正在加载市场数据...
+        </div>
+
+        <!-- 列表容器 -->
+        <div id="market-list" class="grid grid-3 animate-in animate-delay-2 hidden">
+            <!-- JS 渲染 -->
+        </div>
+
+        <!-- 分页 -->
+        <div class="pagination animate-in animate-delay-3" id="pagination">
+            <button class="page-btn"><i data-lucide="chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+
+    <script>
+        let allSkills = [];
+        let currentCategory = 'all';
+        let currentPage = 1;
+        const pageSize = 12;
+
+        async function loadMarketData() {
+            try {
+                // 带作者信息的查询
+                allSkills = await Store.getSkillsWithAuthor();
+                renderSkills(allSkills);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('market-list').classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loading').innerHTML = `<p class="text-red-500">加载失败: ${err.message}</p>`;
+            }
+        }
+
+        function filterCategory(cat, btnElement) {
+            currentCategory = cat;
+            currentPage = 1;
+            
+            // 更新UI
+            document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+
+            // 过滤数据
+            let filtered = allSkills;
+            if (cat !== 'all') {
+                filtered = allSkills.filter(s => s.category === cat);
+            }
+            filtered = applyCurrentSort(filtered);
+            renderSkills(filtered);
+        }
+
+        function sortSkills(type) {
+            let filtered = currentCategory === 'all' ? allSkills : allSkills.filter(s => s.category === currentCategory);
+            currentPage = 1;
+            filtered = applyCurrentSort(filtered, type);
+            renderSkills(filtered);
+        }
+
+        // 搜索节流
+        let searchTimeout;
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const keyword = e.target.value.toLowerCase();
+                let filtered = allSkills.filter(s => 
+                    s.name.toLowerCase().includes(keyword) || 
+                    s.title.toLowerCase().includes(keyword) ||
+                    s.skills.some(skill => skill.toLowerCase().includes(keyword))
+                );
+                
+                // 如果有分类限制
+                if(currentCategory !== 'all') {
+                    filtered = filtered.filter(s => s.category === currentCategory);
+                }
+                filtered = applyCurrentSort(filtered);
+                currentPage = 1;
+                renderSkills(filtered);
+            }, 300);
+        });
+
+        function applyCurrentSort(list, explicitType = null) {
+            const type = explicitType || document.getElementById('sort-select').value;
+            const copied = [...list];
+            if(type === 'latest') copied.sort((a,b) => b.created - a.created);
+            if(type === 'hot') copied.sort((a,b) => b.sales - a.sales);
+            if(type === 'price_asc') copied.sort((a,b) => a.price - b.price);
+            // 公司自研（zeelin/智灵）在推荐页优先展示
+            if (currentCategory === 'all') {
+                copied.sort((a, b) => {
+                    const aScore = a.companyFeatured ? 1 : 0;
+                    const bScore = b.companyFeatured ? 1 : 0;
+                    if (aScore !== bScore) return bScore - aScore;
+                    if (type === 'latest') return (b.created || 0) - (a.created || 0);
+                    if (type === 'hot') return (b.sales || 0) - (a.sales || 0);
+                    if (type === 'price_asc') return (a.price || 0) - (b.price || 0);
+                    return 0;
+                });
+            }
+            return copied;
+        }
+
+        function renderSkills(skills) {
+            const container = document.getElementById('market-list');
+            const pagination = document.getElementById('pagination');
+            
+            if (skills.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i data-lucide="ghost"></i>
+                        <h3>没有找到匹配的龙虾员工</h3>
+                        <p>尝试更换搜索词或筛选条件</p>
+                    </div>`;
+                pagination.innerHTML = '';
+                lucide.createIcons();
+                return;
+            }
+
+            const totalPages = Math.max(1, Math.ceil(skills.length / pageSize));
+            if (currentPage > totalPages) currentPage = totalPages;
+            const start = (currentPage - 1) * pageSize;
+            const pageItems = skills.slice(start, start + pageSize);
+
+            let html = '';
+            pageItems.forEach(c => {
+                const skillsHtml = c.skills.map(s => `<span class="tag">${s}</span>`).join('');
+                
+                html += `
+                <div class="card card-hover flex flex-col relative" onclick="window.location.href='./skill-detail.html?id=${c.id}'" style="cursor:pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="icon-box" style="background:#0f172a; border: 1px solid rgba(255,255,255,0.1);">
+                            <i data-lucide="${c.icon}" style="color: #60a5fa;"></i>
+                        </div>
+                        <div class="badge badge-green flex items-center gap-1">
+                            <span style="width:6px;height:6px;border-radius:50%;background:currentColor" class="animate-pulse"></span> 空闲可入职
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-white mb-1 hover:text-blue-400 transition-colors">${c.name}</h3>
+                    <p class="text-blue-400 font-medium text-sm mb-4">${c.title}</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">${skillsHtml}</div>
+                    
+                    <div class="text-sm text-muted mb-6 bg-[rgba(0,0,0,0.3)] p-3 rounded-lg border border-[rgba(255,255,255,0.05)]">
+                        <strong class="text-slate-300">亮点：</strong>${c.desc.substring(0, 40)}${c.desc.length > 40 ? '...' : ''}
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4 mt-auto">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-muted">开发者:</span>
+                            <span class="text-sm font-medium text-white">${c.authorName}</span>
+                        </div>
+                        <div class="text-red-500 text-lg font-extrabold">
+                            免费
+                        </div>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+            renderPagination(totalPages);
+            lucide.createIcons();
+        }
+
+        function renderPagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = `<button class="page-btn ${currentPage === 1 ? 'opacity-40 pointer-events-none' : ''}" onclick="goToPage(${currentPage - 1})"><i data-lucide="chevron-left"></i></button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            html += `<button class="page-btn ${currentPage === totalPages ? 'opacity-40 pointer-events-none' : ''}" onclick="goToPage(${currentPage + 1})"><i data-lucide="chevron-right"></i></button>`;
+
+            pagination.innerHTML = html;
+            lucide.createIcons({ root: pagination });
+        }
+
+        function goToPage(page) {
+            let filtered = currentCategory === 'all' ? [...allSkills] : allSkills.filter(s => s.category === currentCategory);
+            const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+            if (keyword) {
+                filtered = filtered.filter(s =>
+                    s.name.toLowerCase().includes(keyword) ||
+                    s.title.toLowerCase().includes(keyword) ||
+                    s.skills.some(skill => skill.toLowerCase().includes(keyword))
+                );
+            }
+            filtered = applyCurrentSort(filtered);
+
+            const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+            currentPage = Math.min(Math.max(1, page), totalPages);
+            renderSkills(filtered);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', loadMarketData);
+    </script>
+</body>
+</html>

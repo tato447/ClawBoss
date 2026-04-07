@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPC 案例库 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .roi-stat { padding: 12px; background: rgba(16,185,129,0.1); border-radius: 8px; border: 1px dashed rgba(16,185,129,0.2); }
+    </style>
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <div class="text-center mb-16 animate-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">OPC 商业落地案例库</h1>
+            <p class="text-muted max-w-2xl mx-auto text-lg">看看各行各业的先锋企业，是如何使用 OpenClaw 架构构建他们的龙虾员工矩阵，从而实现降本增效的量变到质变。</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto animate-in animate-delay-1">
+            
+            <!-- 案例 1 -->
+            <div class="card flex flex-col hover:border-blue-500/50 transition-colors">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-blue-900/40 to-slate-900 border border-[rgba(255,255,255,0.05)] mb-6 flex items-center justify-center relative overflow-hidden group">
+                    <i data-lucide="play-circle" class="w-16 h-16 text-white/50 group-hover:text-white transition-colors group-hover:scale-110 duration-300"></i>
+                    <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                        <span class="badge badge-blue">跨境电商</span>
+                        <span class="text-xs text-slate-400 bg-black/60 px-2 py-1 rounded">2:14</span>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3">多语种售后客服矩阵构建</h3>
+                <p class="text-muted text-sm mb-6 flex-grow leading-relaxed">
+                    某头部出海品牌使用 OpenClaw 接入独立站客服系统。龙虾员工不仅能识别 40+ 种语言，还能通过直连内部 ERP 自动查询物流轨道，并根据不同国家的退换货政策进行自动退款审计和放款操作。
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="roi-stat">
+                        <div class="text-xs text-emerald-500 font-bold mb-1">人力成本降低</div>
+                        <div class="text-xl font-bold text-white">82%</div>
+                    </div>
+                    <div class="roi-stat border-[rgba(37,99,235,0.2)] bg-[rgba(37,99,235,0.1)]">
+                        <div class="text-xs text-blue-400 font-bold mb-1">工单闭环率</div>
+                        <div class="text-xl font-bold text-white">94.3%</div>
+                    </div>
+                </div>
+                <button class="btn btn-ghost w-full">查看详细实施方案 <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></button>
+            </div>
+
+            <!-- 案例 2 -->
+            <div class="card flex flex-col hover:border-purple-500/50 transition-colors">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-purple-900/40 to-slate-900 border border-[rgba(255,255,255,0.05)] mb-6 flex items-center justify-center relative overflow-hidden group">
+                    <i data-lucide="play-circle" class="w-16 h-16 text-white/50 group-hover:text-white transition-colors group-hover:scale-110 duration-300"></i>
+                    <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                        <span class="badge badge-purple">金融服务</span>
+                        <span class="text-xs text-slate-400 bg-black/60 px-2 py-1 rounded">3:45</span>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3">研报分析与合规风控助手</h3>
+                <p class="text-muted text-sm mb-6 flex-grow leading-relaxed">
+                    某老牌券商面临庞杂的财报分析与内控审核压力。通过专属定制的 "Data分析师"，每晚自动抓取数万份 PDF 财报并提取关键财务指标，同时基于 RAG 技术校验合规红线，生成千客千面的投资早报。
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="roi-stat">
+                        <div class="text-xs text-emerald-500 font-bold mb-1">研报生成速度提升</div>
+                        <div class="text-xl font-bold text-white">20 倍</div>
+                    </div>
+                    <div class="roi-stat border-[rgba(168,85,247,0.2)] bg-[rgba(168,85,247,0.1)]">
+                        <div class="text-xs text-purple-400 font-bold mb-1">风控遗漏率</div>
+                        <div class="text-xl font-bold text-white">0.01%</div>
+                    </div>
+                </div>
+                <button class="btn btn-ghost w-full">查看详细实施方案 <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></button>
+            </div>
+
+            <!-- 案例 3 -->
+            <div class="card flex flex-col hover:border-pink-500/50 transition-colors">
+                <div class="h-48 rounded-xl bg-gradient-to-br from-pink-900/40 to-slate-900 border border-[rgba(255,255,255,0.05)] mb-6 flex items-center justify-center relative overflow-hidden group">
+                    <i data-lucide="play-circle" class="w-16 h-16 text-white/50 group-hover:text-white transition-colors group-hover:scale-110 duration-300"></i>
+                    <div class="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                        <span class="badge badge-pink">MCN/自媒体</span>
+                        <span class="text-xs text-slate-400 bg-black/60 px-2 py-1 rounded">1:50</span>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-3">AI 原画师与批量矩阵运营</h3>
+                <p class="text-muted text-sm mb-6 flex-grow leading-relaxed">
+                    为某垂类美妆 MCN 提供全套视觉生成工作流。输入一张简陋的商品白底图，龙虾员工调用底层 Stable Diffusion 接口，在 1 分钟内自动生成 10 个场景下的高质量买家秀图片及对应小红书种草文案。
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="roi-stat">
+                        <div class="text-xs text-emerald-500 font-bold mb-1">单图测试成本</div>
+                        <div class="text-xl font-bold text-white">降至￥0.1</div>
+                    </div>
+                    <div class="roi-stat border-[rgba(236,72,153,0.2)] bg-[rgba(236,72,153,0.1)]">
+                        <div class="text-xs text-pink-400 font-bold mb-1">日均产出爆款</div>
+                        <div class="text-xl font-bold text-white">+300 篇</div>
+                    </div>
+                </div>
+                <button class="btn btn-ghost w-full">查看详细实施方案 <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></button>
+            </div>
+
+            <!-- CTA -->
+            <div class="card bg-[rgba(255,255,255,0.02)] border-dashed border-[rgba(255,255,255,0.1)] flex flex-col items-center justify-center text-center p-12">
+                <i data-lucide="building-2" class="w-16 h-16 text-slate-600 mb-6"></i>
+                <h3 class="text-2xl font-bold text-white mb-2">想要探索您的行业方案？</h3>
+                <p class="text-muted mb-8 max-w-sm">我们的案例库持续更新中。留下您的企业信息，由架构师为您定制演示。</p>
+                <a href="./custom.html" class="btn btn-primary btn-lg">获取专属 ROI 评估报告</a>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

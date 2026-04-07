@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能体审核 - 龙虾直聘后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <div class="admin-layout animate-in">
+        <div id="admin-sidebar-container"></div>
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>智能体审核与上架管控</h1>
+                    <p class="text-muted text-sm mt-1">Platform Skills & Agents Moderation</p>
+                </div>
+                <div id="navbar-container" style="position: static; width: auto; border:none; background:none;"></div>
+            </div>
+
+            <div class="tabs mb-6">
+                <button class="tab-btn active" onclick="filterStatus('all', this)">全部应用</button>
+                <button class="tab-btn" onclick="filterStatus('pending', this)">待审核 (0)</button>
+                <button class="tab-btn" onclick="filterStatus('active', this)">已上架</button>
+                <button class="tab-btn" onclick="filterStatus('rejected', this)">已下架</button>
+            </div>
+
+            <div class="card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>龙虾员工 / 标识</th>
+                                <th>开发者</th>
+                                <th>月薪定价</th>
+                                <th>总销量</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="skill-list">
+                            <!-- JS渲染 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 审核/下架详情弹窗 -->
+    <div class="modal-overlay" id="skill-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>应用管控</h3>
+                <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            </div>
+            <div class="mb-6">
+                <p class="text-slate-300 font-bold mb-2">正在操作应用: <strong id="modal-skill-name" class="text-white"></strong></p>
+                <p class="text-sm text-muted">如果该龙虾员工出现幻觉或产生客户投诉，可将其强制下架。</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="btn btn-ghost flex-1" onclick="closeModal()">取消</button>
+                <button class="btn btn-danger flex-1" onclick="suspendSkill()"><i data-lucide="power-off"></i> 强制下架</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        let allSkills = [];
+        let currentStatusRowId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Admin.requireAdmin()) return;
+            Admin.renderSidebar('skills');
+            Components.renderNavbar('../');
+            
+            await loadSkills();
+        });
+
+        async function loadSkills() {
+            allSkills = await Store.getSkillsWithAuthor();
+            renderSkills(allSkills);
+        }
+
+        function filterStatus(status, btn) {
+            document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            let filtered = allSkills;
+            if (status !== 'all') {
+                filtered = allSkills.filter(s => s.status === status);
+            }
+            renderSkills(filtered);
+        }
+
+        function renderSkills(skills) {
+            const container = document.getElementById('skill-list');
+            if(skills.length === 0) {
+                container.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-8">无数据</td></tr>';
+                return;
+            }
+
+            // 按最新排序
+            const sorted = [...skills].sort((a,b) => b.created - a.created);
+            
+            let html = '';
+            sorted.forEach(s => {
+                let statusBadge = '';
+                if(s.status === 'active') statusBadge = '<span class="badge badge-blue">已上架</span>';
+                else if(s.status === 'pending') statusBadge = '<span class="badge badge-yellow">待审核</span>';
+                else statusBadge = '<span class="badge badge-red">已下架</span>';
+
+                html += `
+                <tr>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded bg-[#0f172a] border border-[rgba(255,255,255,0.1)] flex items-center justify-center">
+                                <i data-lucide="${s.icon || 'bot'}" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white hover:text-blue-400 transition-colors cursor-pointer" onclick="window.open('../pages/skill-detail.html?id=${s.id}')">${s.name}</div>
+                                <div class="font-mono text-[10px] text-slate-500">${s.id}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${s.authorName}</td>
+                    <td class="font-mono text-white">￥${s.price}</td>
+                    <td>${s.sales} 单</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-sm btn-ghost" onclick="openModal('${s.id}', '${s.name}')">管理</button>
+                    </td>
+                </tr>`;
+            });
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function openModal(id, name) {
+            currentStatusRowId = id;
+            document.getElementById('modal-skill-name').innerText = name;
+            document.getElementById('skill-modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('skill-modal').classList.remove('open');
+            currentStatusRowId = null;
+        }
+
+        async function suspendSkill() {
+            if(!currentStatusRowId) return;
+
+            try {
+                await Store.update('skills', currentStatusRowId, { status: 'rejected' });
+                Toast.show('应用已下架', 'success');
+                closeModal();
+                await loadSkills();
+            } catch (err) {
+                Toast.show('操作失败', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

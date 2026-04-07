@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管控 - 龙虾直聘后台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <div class="admin-layout animate-in">
+        <div id="admin-sidebar-container"></div>
+        <main class="admin-main">
+            <div class="admin-header">
+                <div>
+                    <h1>用户与租户管理</h1>
+                    <p class="text-muted text-sm mt-1">Platform Users & Tenants</p>
+                </div>
+                <div id="navbar-container" style="position: static; width: auto; border:none; background:none;"></div>
+            </div>
+
+            <div class="card">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <div class="search-box w-full sm:w-80">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="search-input" placeholder="搜索用户名或昵称...">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>用户名号</th>
+                                <th>昵称</th>
+                                <th>角色类型</th>
+                                <th>创建时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list">
+                            <!-- JS渲染 -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination">
+                    <button class="page-btn"><i data-lucide="chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 用户详情模态框 -->
+    <div class="modal-overlay" id="user-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>更新用户状态</h3>
+                <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            </div>
+            <div class="mb-6">
+                <p class="text-slate-300 font-bold mb-2">正在操作账号: <span id="modal-username" class="text-white"></span></p>
+                <p class="text-sm text-muted">你可以暂时禁用该账号登录权限，或者禁止其在平台上架新应用。</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="btn btn-ghost flex-1" onclick="closeModal()">取消</button>
+                <button class="btn btn-danger flex-1" onclick="banUser()"><i data-lucide="ban"></i> 全局封禁</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/admin.js"></script>
+
+    <script>
+        let allUsers = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Admin.requireAdmin()) return;
+            Admin.renderSidebar('users');
+            Components.renderNavbar('../');
+            
+            await loadUsers();
+            
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                const kw = e.target.value.toLowerCase();
+                const filtered = allUsers.filter(u => u.username.toLowerCase().includes(kw) || u.name.toLowerCase().includes(kw));
+                renderUsers(filtered);
+            });
+        });
+
+        async function loadUsers() {
+            allUsers = await Store.get('users');
+            renderUsers(allUsers);
+        }
+
+        function renderUsers(users) {
+            const container = document.getElementById('user-list');
+            if(users.length === 0) {
+                container.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-8">无数据</td></tr>';
+                return;
+            }
+
+            let html = '';
+            users.forEach(u => {
+                let roleBadge = '';
+                if(u.role === 'admin') roleBadge = '<span class="badge badge-purple">管理员</span>';
+                else if(u.role === 'developer') roleBadge = '<span class="badge badge-green">养虾人 (开发者)</span>';
+                else roleBadge = '<span class="badge badge-gray">普通用户</span>';
+
+                html += `
+                <tr>
+                    <td class="font-mono text-white">${u.username}</td>
+                    <td>${u.name}</td>
+                    <td>${roleBadge}</td>
+                    <td class="text-xs text-slate-400">${Components.formatDate(u.created)}</td>
+                    <td><span class="badge badge-blue">正常活动</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-ghost" onclick="openModal('${u.username}')" ${u.role === 'admin' ? 'disabled' : ''}>
+                            账户管控
+                        </button>
+                    </td>
+                </tr>`;
+            });
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function openModal(username) {
+            document.getElementById('modal-username').innerText = username;
+            document.getElementById('user-modal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('user-modal').classList.remove('open');
+        }
+
+        function banUser() {
+            Toast.show('已执行全局封禁策略 (Demo环境不实际写入库)', 'success');
+            closeModal();
+        }
+    </script>
+</body>
+</html>

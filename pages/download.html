@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载 ZeeLinClaw 框架 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <!-- 下载区 Hero -->
+        <div class="text-center mb-16 animate-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">下载 ZeeLinClaw</h1>
+            <p class="text-muted max-w-2xl mx-auto text-lg mb-8">全场景自主 AI 助手，帮你把任务做到底、交付出最终结果。</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://jumuai.oss-cn-hangzhou.aliyuncs.com/director/zeeLinClaw/update/v0.2.6/mac/ZeeLinClaw-0.2.6-arm64.dmg" class="btn btn-primary btn-lg inline-flex items-center gap-2" style="background: linear-gradient(135deg, #3b82f6, #6366f1); border:none">
+                    <i data-lucide="apple"></i> MacOS (M芯片)
+                </a>
+                <a href="https://jumuai.oss-cn-hangzhou.aliyuncs.com/director/zeeLinClaw/update/v0.2.6/mac/ZeeLinClaw-0.2.6.dmg" class="btn btn-secondary btn-lg inline-flex items-center gap-2">
+                    <i data-lucide="apple"></i> MacOS (Intel)
+                </a>
+                <a href="https://jumuai.oss-cn-hangzhou.aliyuncs.com/director/zeeLinClaw/update/v0.2.6/windows/ZeeLinClaw-windows-0.2.6.zip" class="btn btn-secondary btn-lg inline-flex items-center gap-2">
+                    <i data-lucide="monitor"></i> Windows
+                </a>
+            </div>
+        </div>
+
+        <!-- 介绍区 -->
+        <div class="max-w-4xl mx-auto space-y-12 animate-in animate-delay-1">
+            <div class="card card-glow p-8 md:p-10 border-blue-500/20">
+                <h2 class="text-2xl font-bold text-blue-400 mb-6 border-b border-[#334155] pb-4 tracking-wide">ZeeLinClaw 是什么？</h2>
+                <div class="text-slate-300 space-y-5 leading-relaxed font-sans text-base">
+                    <p>ZeeLinClaw 是智灵动力推出的一款全场景自主 AI 助手，和传统大模型、智能体不同，它不仅能“给想法”，更能“动手做”。作为执行型智能体，它可以直接操控文件、浏览器和各种工具，帮你把任务做到底、交付出最终结果。</p>
+                    <p>无论是资料整理、自动编程、办公自动化，还是商业研究、智能管家，ZeeLinClaw 都能全流程自主完成。它具备全自主规划、多模态输出（文字、图表、代码、视频等）、任务历史管理、全系统操控等强大能力。</p>
+                    <div class="pt-4">
+                        <p class="font-bold text-white mb-4 text-lg">更值得一提的是，ZeeLinClaw 拥有多项核心优势：</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">自动部署，开箱即用：</strong>一键安装，支持Windows 和 Mac，国产优化，极速上手；</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">多模型自由切换：</strong>支持10 多种主流模型，支持本地部署（Ollama），数据 100% 留存在本地；</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">即时通讯集成：</strong>兼容钉钉、飞书、微信、QQ、Telegram、Discord 等主流办公软件；</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">极致安全：</strong>工具调用需审批，操作轨迹可追溯，AI 始终在你的掌控之中；</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">丰富skills生态：</strong>技能库内置 12+ 专业技能，覆盖开发、设计、办公全场景，还可在技能广场安装更丰富的技能。</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i> <span><strong class="text-white">远程操控：</strong>即使不在电脑前，也能通过手机发送指令，让AI帮你改文档、查数据。</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 安装指引 -->
+            <div class="card p-8 md:p-10 border-slate-700 bg-slate-800/40 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5"><i data-lucide="download-cloud" class="w-48 h-48"></i></div>
+                <h2 class="text-2xl font-bold text-blue-400 mb-10 text-center tracking-wide relative z-10">简单三步安装指引</h2>
+                
+                <div class="space-y-12 relative z-10">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-lg shrink-0">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3 mt-1">第一步：下载应用</h3>
+                            <p class="text-slate-300 leading-relaxed text-base">从本页上方按钮直接下载。或访问智灵动力官网，在“产品服务”栏中找到 ZeeLinClaw，选择适合系统的版本下载（<a href="https://www.zeelin.cn/#/" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors">https://www.zeelin.cn/#/</a>）。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-lg shrink-0">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-3 mt-1">第二步：安装与打开</h3>
+                            <p class="text-slate-300 leading-relaxed text-base">下载完成后，双击安装包进行安装。安装成功后，点击图标打开软件，即可进入主界面。</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold text-lg shrink-0">3</div>
+                        <div class="w-full">
+                            <h3 class="text-xl font-bold text-white mb-3 mt-1">第三步：获取免费Token并开始使用</h3>
+                            <div class="text-slate-300 leading-relaxed text-base">
+                                <p class="mb-5">新用户可免费领取 <strong class="text-emerald-400">100万 Token</strong>，操作非常简单：</p>
+                                <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50 mb-6 font-mono text-sm">
+                                    <ul class="space-y-4">
+                                        <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-xs text-slate-400">1</span> 点击软件中的 <span class="bg-slate-800 px-2 py-1 rounded text-white">设置</span></li>
+                                        <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-xs text-slate-400">2</span> 选择左侧菜单 <span class="bg-slate-800 px-2 py-1 rounded text-white">模型</span></li>
+                                        <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-xs text-slate-400">3</span> 勾选 <span class="bg-slate-800 px-2 py-1 rounded text-white">ZeeLin 免费试用</span></li>
+                                        <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-xs text-slate-400">4</span> 点击“Key 获取地址”，按跳转页面的提示获取密钥</li>
+                                        <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center text-xs text-slate-400">5</span> 在“API Key”处粘贴密钥，点击 <span class="bg-blue-600 px-2 py-1 rounded text-white">保存</span></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 p-5 rounded-xl flex items-start gap-4 shadow-lg">
+                                    <i data-lucide="sparkles" class="text-blue-400 shrink-0 mt-1"></i>
+                                    <p class="text-blue-100 mb-0 font-medium">设置完成后，返回主页面，点击“新建任务”，即可拥有属于你的<span class="text-white font-bold mx-1">“智灵龙虾”</span>，开始使用啦！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙虾直聘 - 登录/注册</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <div class="container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 10;">
+        <div class="card card-glow" style="width: 100%; max-width: 440px; padding: 40px !important;">
+            
+            <div class="text-center mb-8">
+                <a href="../index.html" class="inline-flex items-center gap-2 mb-6 cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                    <i data-lucide="bot" style="color:var(--color-primary); width:28px;height:28px;"></i>
+                    <span style="font-size:20px;font-weight:800;color:#fff;">返回首页</span>
+                </a>
+                <h2 class="text-2xl font-bold text-white mb-2" id="form-title">欢迎回到龙虾直聘</h2>
+                <p class="text-muted text-sm" id="form-subtitle">登录雇佣您的专属龙虾员工</p>
+            </div>
+
+            <div class="tabs" style="width: 100%; display: flex; margin-bottom: 24px;">
+                <button class="tab-btn active" style="flex:1" onclick="switchAuthTab('login')" id="tab-login">登录</button>
+                <button class="tab-btn" style="flex:1" onclick="switchAuthTab('register')" id="tab-register">注册新用户</button>
+            </div>
+
+            <!-- 登录表单 -->
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">用户名</label>
+                    <input type="text" id="l-username" class="form-input" required placeholder="例如: demo">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" id="l-password" class="form-input" required placeholder="例如: 123">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-6" id="btn-login">立即登录</button>
+            </form>
+
+            <!-- 注册表单 -->
+            <form id="register-form" class="hidden" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label">用户名 (登录账号)</label>
+                    <input type="text" id="r-username" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">全名 / 昵称</label>
+                    <input type="text" id="r-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码</label>
+                    <input type="password" id="r-password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">您在使用平台的身份偏好</label>
+                    <div class="form-hint mb-2">无论选择哪种，所有用户均可买卖龙虾员工。</div>
+                    <select id="r-role" class="form-select">
+                        <option value="user">我是企业主/普通用户 (倾向寻找龙虾员工)</option>
+                        <option value="developer">我是养虾人/开发者 (倾向出售自己搭建的智能体)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-6" id="btn-register">注册并登录</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- 脚本引入 -->
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    
+    <script>
+        lucide.createIcons();
+
+        // 分析URL参数决定默认TAB
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('tab') === 'register') {
+            switchAuthTab('register');
+        }
+
+        function switchAuthTab(tab) {
+            if(tab === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('tab-login').classList.add('active');
+                document.getElementById('tab-register').classList.remove('active');
+                document.getElementById('form-title').innerText = '欢迎回到龙虾直聘';
+                document.getElementById('form-subtitle').innerText = '登录雇佣您的专属龙虾员工';
+            } else {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.remove('hidden');
+                document.getElementById('tab-login').classList.remove('active');
+                document.getElementById('tab-register').classList.add('active');
+                document.getElementById('form-title').innerText = '注册龙虾直聘账号';
+                document.getElementById('form-subtitle').innerText = '加入下一代 AI 人力平台';
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            btn.disabled = true;
+            btn.innerText = '登录中...';
+
+            try {
+                await Auth.login(
+                    document.getElementById('l-username').value,
+                    document.getElementById('l-password').value
+                );
+                Toast.show('登录成功', 'success');
+                setTimeout(() => window.location.href = '../index.html', 1000);
+            } catch (err) {
+                Toast.show(err.message, 'error');
+                btn.disabled = false;
+                btn.innerText = '立即登录';
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-register');
+            btn.disabled = true;
+            btn.innerText = '注册中...';
+
+            try {
+                await Auth.register(
+                    document.getElementById('r-username').value,
+                    document.getElementById('r-password').value,
+                    document.getElementById('r-name').value,
+                    document.getElementById('r-role').value
+                );
+                Toast.show('注册成功', 'success');
+                setTimeout(() => window.location.href = '../index.html', 1000);
+            } catch (err) {
+                Toast.show(err.message, 'error');
+                btn.disabled = false;
+                btn.innerText = '注册并登录';
+            }
+        }
+    </script>
+</body>
+</html>

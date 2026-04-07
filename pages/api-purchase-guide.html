@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 购买说明 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>
+        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <div class="max-w-3xl mx-auto">
+            <div class="card animate-in">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="icon-box icon-box-blue">
+                        <i data-lucide="shield-alert"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white mb-2">第三方 API 购买说明</h1>
+                        <p class="text-muted text-sm">请先确认购买流程与密钥配置要求，再进入供应商页面购买。</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)]">
+                        <div class="text-sm text-muted mb-1">技能名称</div>
+                        <div id="skillName" class="text-white font-bold">-</div>
+                    </div>
+                    <div class="p-4 rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)]">
+                        <div class="text-sm text-muted mb-1">供应商</div>
+                        <div id="vendorName" class="text-white font-bold">-</div>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 mb-6">
+                    <h3 class="text-amber-200 font-bold mb-2">购买前建议</h3>
+                    <ul class="text-sm text-amber-100/90 space-y-1">
+                        <li>1. 先购买最低可用套餐，验证链路后再升级。</li>
+                        <li>2. 保存好 API Key，不要发到群聊或公开文档。</li>
+                        <li>3. 建议设置调用额度告警，避免超额扣费。</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="./marketplace.html" class="btn btn-secondary flex-1 text-center">返回市场</a>
+                    <a id="goVendorBtn" href="#" class="btn btn-primary flex-1 text-center">确认并前往购买</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const skill = params.get('skill') || '当前龙虾技能';
+            const vendor = params.get('vendor') || '第三方服务商';
+            const target = params.get('target') || 'https://clawhub.ai/skills';
+
+            document.getElementById('skillName').innerText = skill;
+            document.getElementById('vendorName').innerText = vendor;
+            document.getElementById('goVendorBtn').href = target;
+        });
+    </script>
+</body>
+</html>

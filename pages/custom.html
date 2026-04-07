@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业定制服务 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <div class="text-center mb-16 animate-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">企业级龙虾员工深度定制</h1>
+            <p class="text-muted max-w-2xl mx-auto text-lg">通用能力无法满足业务？我们的资深架构师团队将基于 OpenClaw 框架，为您量身打造深扎业务流的智能劳动力。</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
+            <!-- 左侧流程说明 -->
+            <div class="space-y-8 animate-in animate-delay-1">
+                <h3 class="text-2xl font-bold text-white flex items-center gap-2 mb-8">
+                    <i data-lucide="git-merge" class="text-blue-400"></i> 标准化交付流程
+                </h3>
+                
+                <div class="relative border-l-2 border-[rgba(37,99,235,0.2)] pl-8 space-y-12 pb-4 ml-4">
+                    <div class="relative">
+                        <div class="absolute w-5 h-5 bg-blue-500 rounded-full -left-[43px] top-1 border-4 border-[rgba(5,5,5,1)] shadow-[0_0_10px_rgba(37,99,235,0.5)]"></div>
+                        <h4 class="text-xl font-bold text-white mb-2">1. 业务痛点诊断 <span class="badge badge-green ml-2">免费</span></h4>
+                        <p class="text-muted leading-relaxed">架构师 1v1 深入沟通，分析现有企业业务流中的低效环节（如：重复客诉、数据人工汇总繁琐、大量重复设计排版），出具自动化诊断报告和 SOP 链路图。</p>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute w-5 h-5 bg-[#334155] rounded-full -left-[43px] top-1 border-4 border-[rgba(5,5,5,1)]"></div>
+                        <h4 class="text-xl font-bold text-slate-300 mb-2">2. 智能体架构设计与搭建</h4>
+                        <p class="text-muted leading-relaxed">对接企业内部知识库（Wiki、飞书文档、内部语料），编写核心 Prompt。打通 ERP、CRM 等内部系统的 API 接口，实现数据的上传下达闭环。</p>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute w-5 h-5 bg-[#334155] rounded-full -left-[43px] top-1 border-4 border-[rgba(5,5,5,1)]"></div>
+                        <h4 class="text-xl font-bold text-slate-300 mb-2">3. 压力与防幻觉测试</h4>
+                        <p class="text-muted leading-relaxed">进行高并发请求测试与极限场景（Corner Cases）的安全测试，确保龙虾员工行为不违背企业合规要求，回答不产生幻觉。</p>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute w-5 h-5 bg-[#334155] rounded-full -left-[43px] top-1 border-4 border-[rgba(5,5,5,1)]"></div>
+                        <h4 class="text-xl font-bold text-slate-300 mb-2">4. 灰度上线与交付</h4>
+                        <p class="text-muted leading-relaxed">一键接入钉钉/企微群组，或嵌入内网平台。先小范围灰度运行并微调，达标后全员开放。并提供长期的算力运维监控。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧加微信区 -->
+            <div class="card card-glow animate-in animate-delay-2 p-[2px]">
+                <div class="bg-black/80 rounded-[22px] p-8 h-full backdrop-blur-xl relative z-10">
+                    <h3 class="text-2xl font-bold text-white mb-3">加微信获取定制方案</h3>
+                    <p class="text-muted text-sm leading-relaxed mb-6">
+                        为了更快对接业务需求，请直接扫码添加顾问微信，发送「企业定制 + 你的场景描述」。
+                    </p>
+
+                    <div class="flex justify-center mb-6">
+                        <img src="../assets/erweima.jpg" alt="定制咨询微信二维码" class="w-56 h-56 rounded-2xl object-cover border border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.35)]">
+                    </div>
+
+                    <div class="space-y-3 text-sm text-slate-300">
+                        <div class="flex items-start gap-3">
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">1</span>
+                            <span>扫码添加微信，备注公司名与岗位。</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">2</span>
+                            <span>发送你的核心痛点、数据来源、期望交付时间。</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold">3</span>
+                            <span>我们会在 2 个工作小时内回你初版定制建议。</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10">
+                        <p class="text-xs text-amber-100/90 leading-relaxed">
+                            提示：若你的需求涉及第三方 API（如 CRM、ERP、舆情数据源），请一并说明是否已有账号与 Key，能显著缩短交付时间。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+    
+</body>
+</html>

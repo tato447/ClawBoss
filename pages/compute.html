@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力服务 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <div class="text-center mb-16 animate-in">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">算力基座与模型 API</h1>
+            <p class="text-muted max-w-2xl mx-auto text-lg">无需操心底层的模型调用与负载均衡。接入 OpenClaw 算力网络，为你的龙虾员工提供澎湃动力。</p>
+        </div>
+
+        <div class="grid grid-3 gap-8 max-w-6xl mx-auto animate-in animate-delay-1">
+            <!-- 方案1 -->
+            <div class="card flex flex-col">
+                <h3 class="text-xl font-bold text-white mb-2">虾苗版 (免费包)</h3>
+                <p class="text-sm text-muted mb-6 min-h-[40px]">适合个人开发者与小微企业体验评估流水线</p>
+                <div class="mb-6 border-b border-[rgba(255,255,255,0.1)] pb-6">
+                    <span class="text-4xl font-extrabold text-white">￥0</span>
+                    <span class="text-muted">/月</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-grow">
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>每月 10 万 Tokens 免费额度</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>支持基础文字/客服大模型</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>单设备并发数 1</span>
+                    </li>
+                </ul>
+                <button class="btn btn-secondary w-full">免费试用</button>
+            </div>
+
+            <!-- 方案2 -->
+            <div class="card flex flex-col border-blue-500 relative" style="box-shadow: 0 0 30px rgba(37,99,235,0.15); transform: scale(1.05); z-index: 10;">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">团队首选</div>
+                <h3 class="text-xl font-bold text-white mb-2">青壳版 (专业包)</h3>
+                <p class="text-sm text-muted mb-6 min-h-[40px]">最受中小企业欢迎的主力生产包，满足日常业务所需。</p>
+                <div class="mb-6 border-b border-[rgba(37,99,235,0.2)] pb-6">
+                    <span class="text-4xl font-extrabold text-white">￥499</span>
+                    <span class="text-muted">/月</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-grow">
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span class="font-bold text-white">每月 2000 万 Tokens 高速算力</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>解锁全部多模态模型 (图像/声音)</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>支持企微/飞书等主流平台一键直连</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>多设备/多账号并发数 10</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i> <span class="text-emerald-300">专属技术交流群支持 (5x8小时)</span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary btn-lg w-full">立即订阅</button>
+            </div>
+
+            <!-- 方案3 -->
+            <div class="card flex flex-col">
+                <h3 class="text-xl font-bold text-white mb-2">龙虾王 (企业私有化)</h3>
+                <p class="text-sm text-muted mb-6 min-h-[40px]">专为大型业务线、出海电商和高并发、高隐私要求定制。</p>
+                <div class="mb-6 border-b border-[rgba(255,255,255,0.1)] pb-6">
+                    <span class="text-4xl font-extrabold text-white">联系销售</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-grow">
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>独占算力池与私有化本地部署</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span class="font-bold">无限制并发数与QPS调台</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>SLA 99.99% 企业级承诺</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="check" class="w-5 h-5 text-blue-400 shrink-0"></i> <span>企业指定私有模型 Lora 微调与训练</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-300">
+                        <i data-lucide="star" class="w-5 h-5 text-yellow-500 fill-current shrink-0"></i> <span class="text-yellow-400">专属架构师 1v1 7x24小时驻场式支持</span>
+                    </li>
+                </ul>
+                <a href="./custom.html" class="btn btn-secondary w-full">预约评估咨询</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

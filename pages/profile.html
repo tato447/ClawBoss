@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(124,58,237,0.1));
+            border-bottom: 1px solid var(--color-border);
+            padding: 48px 0; margin-bottom: 32px;
+        }
+        .avatar-lg {
+            width: 80px; height: 80px; font-size: 32px; background: var(--color-primary);
+        }
+    </style>
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <div class="profile-header animate-in">
+        <div class="container flex items-center gap-6">
+            <div class="navbar-avatar avatar-lg" id="profile-avatar">U</div>
+            <div>
+                <h1 class="text-3xl font-bold text-white mb-2 flex items-center gap-2">
+                    <span id="profile-name">加载中...</span>
+                    <!-- 动态徽章 -->
+                    <span id="role-badge" class="badge badge-gray">用户</span>
+                </h1>
+                <p class="text-muted flex items-center gap-1"><i data-lucide="user-square" class="w-4 h-4"></i> ID: <span id="profile-username" class="font-mono">...</span></p>
+            </div>
+            
+            <div class="ml-auto">
+                <a href="./publish.html" class="btn btn-primary"><i data-lucide="plus"></i> 立即发布龙虾员工</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="page-content container" style="padding-top: 0;">
+        <div class="tabs mb-8 animate-in animate-delay-1" style="margin-left: 0;">
+            <button class="tab-btn active" onclick="switchTab('orders', this)">我雇佣的员工</button>
+            <button class="tab-btn" onclick="switchTab('published', this)">我发布的员工</button>
+            <button class="tab-btn" onclick="switchTab('settings', this)">账号设置</button>
+        </div>
+
+        <!-- 我雇佣的员工 (订单) -->
+        <div id="tab-orders" class="animate-in animate-delay-2">
+            <div class="card">
+                <h3 class="text-xl font-bold text-white mb-6">入职员工表</h3>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>龙虾员工 / 岗位</th>
+                                <th>单价 (月)</th>
+                                <th>雇佣时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-list">
+                            <!-- JS 渲染 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我发布的员工 -->
+        <div id="tab-published" class="animate-in animate-delay-2 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">上架管理</h3>
+                <a href="./publish.html" class="btn btn-sm btn-secondary">发布新员工</a>
+            </div>
+            
+            <div class="grid grid-3" id="published-list">
+                <!-- JS 渲染 -->
+            </div>
+        </div>
+
+        <!-- 账号设置 -->
+        <div id="tab-settings" class="animate-in animate-delay-2 hidden">
+            <div class="card max-w-2xl">
+                <h3 class="text-xl font-bold text-white mb-6">基本信息设置</h3>
+                <form id="settings-form" onsubmit="saveSettings(event)">
+                    <div class="form-group">
+                        <label class="form-label">用户昵称</label>
+                        <input type="text" id="s-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">修改密码 (不填则不修改)</label>
+                        <input type="password" id="s-password" class="form-input" placeholder="输入新密码">
+                    </div>
+                    <!-- 这是一个演示页面，暂时不存大量设置 -->
+                    <button type="submit" class="btn btn-primary mt-4">保存修改</button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!Auth.requireAuth()) return;
+            currentUser = Auth.getCurrentUser();
+            
+            // 渲染头部
+            document.getElementById('profile-name').innerText = currentUser.name;
+            document.getElementById('profile-username').innerText = currentUser.username;
+            document.getElementById('profile-avatar').innerText = currentUser.name.charAt(0).toUpperCase();
+            
+            const badge = document.getElementById('role-badge');
+            if(currentUser.role === 'developer') {
+                badge.className = 'badge badge-green';
+                badge.innerText = '养虾人 (开发者)';
+            } else if(currentUser.role === 'admin') {
+                badge.className = 'badge badge-purple';
+                badge.innerText = '平台管理员';
+                badge.innerHTML += ' <a href="../admin/dashboard.html" class="text-purple-200 underline ml-2">进入后台</a>';
+            }
+
+            // 填充设置表单
+            document.getElementById('s-name').value = currentUser.name;
+
+            // 加载数据
+            await loadOrders();
+            await loadPublished();
+        });
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tabs .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            ['orders', 'published', 'settings'].forEach(id => {
+                const el = document.getElementById(`tab-${id}`);
+                if(id === tabId) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+        }
+
+        async function loadOrders() {
+            const container = document.getElementById('orders-list');
+            const allOrders = await Store.get('orders');
+            const allSkills = await Store.get('skills');
+            
+            const userOrders = allOrders.filter(o => o.userId === currentUser.id);
+
+            if(userOrders.length === 0) {
+                container.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-muted">暂无雇佣记录，快去<a href="./marketplace.html" class="text-blue-400 ml-1">龙虾员工</a>看看吧</td></tr>';
+                return;
+            }
+
+            // 降序
+            userOrders.sort((a,b) => b.created - a.created);
+
+            let html = '';
+            userOrders.forEach(o => {
+                const skill = allSkills.find(s => s.id === o.skillId) || { name: '已下架岗位', title: '未知' };
+                
+                html += `
+                <tr>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded bg-[#0f172a] border border-[rgba(255,255,255,0.1)] flex items-center justify-center">
+                                <i data-lucide="${skill.icon || 'bot'}" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-white">${skill.name}</div>
+                                <div class="text-xs text-muted">${skill.title}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="font-mono text-blue-400">￥${o.price}</td>
+                    <td>${Components.formatDate(o.created)}</td>
+                    <td><span class="badge badge-green">工作中</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-ghost">配置参数</button>
+                        <button class="btn btn-sm btn-secondary ml-2">续费</button>
+                    </td>
+                </tr>`;
+            });
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        async function loadPublished() {
+            const container = document.getElementById('published-list');
+            const allSkills = await Store.get('skills');
+            
+            const userSkills = allSkills.filter(s => s.developerId === currentUser.id);
+
+            if(userSkills.length === 0) {
+                container.innerHTML = `
+                <div class="empty-state" style="grid-column: 1 / -1; background: var(--color-bg-card); border: 1px dashed var(--color-border); border-radius: var(--radius-xl);">
+                    <i data-lucide="package-open"></i>
+                    <h3>您还没有发布任何龙虾员工</h3>
+                    <p>快把你的 Agent 上架平台产生收益吧！</p>
+                    <a href="./publish.html" class="btn btn-primary mt-2">马上发布</a>
+                </div>`;
+                lucide.createIcons();
+                return;
+            }
+
+            let html = '';
+            userSkills.forEach(c => {
+                html += `
+                <div class="card card-hover flex flex-col relative" onclick="window.location.href='./skill-detail.html?id=${c.id}'" style="cursor:pointer">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="icon-box" style="background:#0f172a; border: 1px solid rgba(255,255,255,0.1);">
+                            <i data-lucide="${c.icon}" style="color: #60a5fa;"></i>
+                        </div>
+                        <div class="badge ${c.status === 'active' ? 'badge-blue' : 'badge-gray'}">${c.status === 'active' ? '上架中' : '审核中'}</div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-white mb-1">${c.name}</h3>
+                    <p class="text-blue-400 font-medium text-sm mb-4">${c.title}</p>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t">
+                        <div class="text-sm text-muted">售价: <span class="text-white font-bold">￥${c.price}</span></div>
+                        <div class="text-sm text-muted">销量: <span class="text-white font-bold">${c.sales}</span></div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        async function saveSettings(e) {
+            e.preventDefault();
+            const newName = document.getElementById('s-name').value;
+            const newPwd = document.getElementById('s-password').value;
+
+            try {
+                const updates = { name: newName };
+                if (newPwd) updates.password = newPwd;
+
+                const user = await Store.update('users', currentUser.id, updates);
+                
+                // 更新会话
+                const { password: _, ...sessionUser } = user;
+                localStorage.setItem('lx_session', JSON.stringify(sessionUser));
+                currentUser = sessionUser;
+
+                // 更新界面
+                document.getElementById('profile-name').innerText = user.name;
+                document.getElementById('profile-avatar').innerText = user.name.charAt(0).toUpperCase();
+
+                Toast.show('设置已保存', 'success');
+                document.getElementById('s-password').value = ''; // 清空密码框
+
+                if (window.Components) Components.renderNavbar('../');
+
+            } catch(err) {
+                Toast.show('保存失败', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

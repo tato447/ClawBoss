@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙虾员工详情 - 龙虾直聘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-glow">
+    <!-- 导航栏（静态HTML，JS只更新用户区域） -->
+    <nav class="navbar" id="navbar-container">
+        <div class="navbar-inner">
+            <a href="../index.html" class="navbar-logo">
+                <img src="../assets/logo-64.png" alt="Logo" class="site-logo-img" width="32" height="32" decoding="async" fetchpriority="high">
+                <span>龙虾直聘</span>
+            </a>
+            <div class="navbar-menu hidden lg:flex" id="navbar-menu">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+                <a href="./custom.html" class="nav-link">定制员工</a>
+            </div>
+            <div class="navbar-actions">
+                <div id="nav-auth-area" class="flex items-center gap-2"></div>
+                <button class="mobile-menu-btn lg:hidden" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="../index.html" class="nav-link">首页</a>
+            <a href="./marketplace.html" class="nav-link">龙虾员工</a>
+            <a href="./custom.html" class="nav-link">定制员工</a>        </div>
+    </nav>
+
+    <main class="page-content container pb-20">
+        <div class="mb-6 flex items-center gap-2">
+            <a href="javascript:history.back()" class="text-muted hover:text-white transition-colors flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> 返回市场
+            </a>
+        </div>
+
+        <!-- 骨架屏 / 加载状态 -->
+        <div id="loading" class="text-center py-20 text-muted">
+            <i data-lucide="loader-2" class="w-8 h-8 animate-pulse mx-auto mb-4"></i>
+            正在加载简历信息...
+        </div>
+
+        <div id="detail-container" class="hidden">
+            <!-- 头部概览 -->
+            <div class="card mb-8 animate-in relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none" id="header-glow"></div>
+                <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center">
+                    <div class="icon-box w-24 h-24 sm:w-32 sm:h-32 rounded-[24px]" style="background:#0f172a; border: 1px solid rgba(255,255,255,0.1);" id="skill-icon-box">
+                        <i data-lucide="bot" id="skill-icon" style="width:40px;height:40px;color: #60a5fa;"></i>
+                    </div>
+                    
+                    <div class="flex-grow">
+                        <div class="flex flex-wrap items-center gap-3 mb-2">
+                            <h1 class="text-3xl font-bold text-white" id="skill-name">龙虾员工</h1>
+                            <div class="badge badge-green flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> 立即上岗
+                            </div>
+                        </div>
+                        <p class="text-xl text-blue-400 font-medium mb-4" id="skill-title">加载中...</p>
+                        <div class="flex flex-wrap gap-2 mb-4" id="skill-tags"></div>
+                        <div class="flex flex-wrap items-center gap-6 text-sm text-muted">
+                            <span class="flex items-center gap-1"><i data-lucide="user" class="w-4 h-4"></i> 开发者: <span class="text-slate-300" id="skill-author">...</span></span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> 上架时间: <span class="text-slate-300" id="skill-date">...</span></span>
+                            <span class="text-red-500 text-xl font-extrabold">免费</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-auto p-6 bg-[rgba(0,0,0,0.4)] rounded-2xl border border-[rgba(255,255,255,0.05)] text-center shadow-lg">
+                        <div class="text-sm text-muted mb-1">雇佣薪资</div>
+                        <div class="text-4xl font-extrabold text-white mb-6" id="skill-price">免费</div>
+                        <button class="btn btn-primary btn-lg w-full mb-3" onclick="handleHire()">
+                            <i data-lucide="shopping-cart"></i> 办理入职
+                        </button>
+                        <button class="btn btn-secondary w-full" onclick="openCustomModal()">
+                            <i data-lucide="wand-sparkles"></i> 我要定制
+                        </button>
+                        <div id="api-pay-alert" class="mt-4 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-left hidden">
+                            <div class="text-amber-300 font-bold mb-1 flex items-center gap-2">
+                                <i data-lucide="triangle-alert" class="w-4 h-4"></i> 第三方 API 付费提醒
+                            </div>
+                            <p class="text-xs text-amber-100/90 leading-relaxed">
+                                该龙虾依赖第三方 API，需单独购买后填入密钥才能完整运行。
+                                建议先开通最低套餐测试，再按调用量升级。
+                            </p>
+                            <a id="api-buy-link" href="#" class="text-xs text-amber-200 underline mt-2 inline-block">查看购买方式</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容区 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 左侧详细介绍 -->
+                <div class="lg:col-[span_2] space-y-8 animate-in animate-delay-1">
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <i data-lucide="file-text" class="text-blue-400"></i> 龙虾员工简历
+                        </h3>
+                        <div class="resume-tabs mb-4">
+                            <button id="tab-human" class="resume-tab active" onclick="switchResumeTab('human')">人类阅读</button>
+                            <button id="tab-raw" class="resume-tab" onclick="switchResumeTab('raw')">龙虾阅读</button>
+                        </div>
+                        <div id="resume-panel-human" class="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)] p-5">
+                            <div class="text-slate-300 leading-relaxed font-sans" style="white-space: pre-wrap;" id="skill-desc-human">
+                                <!-- 内容由 JS 填充 -->
+                            </div>
+                        </div>
+                        <div id="resume-panel-raw" class="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(0,0,0,0.28)] p-5 hidden">
+                            <pre class="text-slate-300 text-xs leading-relaxed overflow-auto" style="max-height:560px; white-space:pre-wrap;" id="skill-desc-raw"><!-- 内容由 JS 填充 --></pre>
+                        </div>
+                        <div class="text-xs text-muted mt-3">
+                            点击上方页签切换内容视图
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧信息栏 -->
+                <div class="space-y-8 animate-in animate-delay-2">
+                    <div class="card">
+                        <h3 class="text-lg font-bold text-white mb-4">履历与战绩</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="text-white text-base">上架龙虾平台</h4>
+                                <p class="text-xs text-muted mt-1" id="skill-date-history"></p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot inactive"></div>
+                                <h4 class="text-white text-base">完成防幻觉测试</h4>
+                                <p class="text-xs text-muted mt-1">通过 OpenClaw 官方认证沙盒测试。准确率 99.8%。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 入职提示词弹窗 -->
+    <div id="hireModal" class="hire-modal-overlay" style="display:none;">
+        <div class="hire-modal-container">
+            <!-- 关闭按钮 -->
+            <button class="hire-modal-close" onclick="closeHireModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <h2 class="hire-modal-title">🎉 入职办理成功！</h2>
+            <p class="hire-modal-subtitle">复制下方提示词发给你的龙虾助手，按提示完成部署即可。</p>
+
+            <!-- 提示词区域 -->
+            <div class="hire-prompt-box" id="hirePromptBox">
+                <div class="hire-prompt-header">
+                    <span class="hire-prompt-label"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> 一键部署提示词</span>
+                    <button class="hire-copy-btn" onclick="copyHirePrompt()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <span id="copyBtnText">复制</span>
+                    </button>
+                </div>
+                <pre class="hire-prompt-content" id="hirePromptContent"><!-- JS 动態填充 --></pre>
+            </div>
+
+            <div class="hire-modal-footer">
+                <button class="btn btn-secondary" onclick="closeHireModal()">稍后再说</button>
+                <button class="btn btn-primary" onclick="copyHirePrompt()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    复制提示词并部署
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="customModal" class="hire-modal-overlay" style="display:none;">
+        <div class="hire-modal-container">
+            <button class="hire-modal-close" onclick="closeCustomModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <h2 class="hire-modal-title">我要定制</h2>
+            <p class="hire-modal-subtitle">扫码添加顾问，发送“企业定制 + 需求描述”，我们会在 1 个工作日内联系你。</p>
+            <div class="qr-wrap">
+                <img src="../assets/erweima.jpg" alt="定制服务二维码" class="hire-qr-image">
+            </div>
+            <div class="hire-modal-footer">
+                <button class="btn btn-primary w-full" onclick="closeCustomModal()">我知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* ===== 入职提示词弹窗样式 ===== */
+        .hire-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: hireOverlayIn 0.3s ease;
+        }
+        @keyframes hireOverlayIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hire-modal-container {
+            background: linear-gradient(160deg, #111827 0%, #0f172a 40%, #0c1220 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 40px 36px 32px;
+            max-width: 640px;
+            width: 100%;
+            position: relative;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.05),
+                0 25px 80px rgba(0,0,0,0.6),
+                0 0 120px rgba(99,102,241,0.08);
+            animation: hireModalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes hireModalIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .hire-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            border-radius: 10px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hire-modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .hire-modal-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .hire-modal-subtitle {
+            font-size: 14px;
+            color: #94a3b8;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .qr-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+        .hire-qr-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+        }
+        .hire-prompt-box {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .hire-prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .hire-prompt-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .hire-copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #818cf8;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.25);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hire-copy-btn:hover {
+            background: rgba(99,102,241,0.2);
+            color: #a5b4fc;
+        }
+        .hire-copy-btn.copied {
+            color: #34d399;
+            background: rgba(16,185,129,0.1);
+            border-color: rgba(16,185,129,0.3);
+        }
+        .hire-prompt-content {
+            padding: 20px;
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: #e2e8f0;
+            font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 260px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+        .hire-prompt-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .hire-prompt-content::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+        .hire-modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        .hire-modal-footer .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .resume-tabs {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        .resume-tab {
+            height: 44px;
+            padding: 0;
+            color: #8b98b1;
+            background: transparent;
+            border: 0;
+            border-bottom: 3px solid transparent;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color .2s ease, border-color .2s ease;
+        }
+        .resume-tab:hover {
+            color: #d6deec;
+        }
+        .resume-tab.active {
+            color: #f4f7ff;
+            border-bottom-color: #ef4444;
+        }
+
+        @media (max-width: 640px) {
+            .hire-modal-container {
+                padding: 28px 20px 24px;
+                border-radius: 20px;
+            }
+            .hire-modal-footer {
+                flex-direction: column;
+            }
+            .hire-modal-footer .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <script src="../js/store.js"></script>
+    <script src="../js/skillmd-map.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/app.js"></script>
+
+    <script>
+        let currentSkill = null;
+
+        async function loadDetail() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('id');
+                if(!id) throw new Error('无效的访问参数');
+
+                const skills = await Store.getSkillsWithAuthor();
+                currentSkill = skills.find(s => s.id === id);
+
+                if(!currentSkill) {
+                    throw new Error('未找到该龙虾员工或已下架');
+                }
+
+                renderDetail();
+            } catch (err) {
+                document.getElementById('loading').innerHTML = `
+                <div class="empty-state">
+                    <i data-lucide="search-x"></i>
+                    <h3>${err.message}</h3>
+                    <a href="marketplace.html" class="btn btn-primary mt-4">返回市场</a>
+                </div>`;
+                lucide.createIcons();
+            }
+        }
+
+        function renderDetail() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('detail-container').classList.remove('hidden');
+
+            const s = currentSkill;
+            
+            // 填充数据
+            document.getElementById('skill-name').innerText = s.name;
+            document.getElementById('skill-title').innerText = s.title;
+            document.getElementById('skill-author').innerText = s.authorName;
+            document.getElementById('skill-date').innerText = Components.formatDate(s.created).split(' ')[0];
+            document.getElementById('skill-date-history').innerText = Components.formatDate(s.created).split(' ')[0];
+            document.getElementById('skill-price').innerText = '免费';
+            const apiAlert = document.getElementById('api-pay-alert');
+            const apiBuyLink = document.getElementById('api-buy-link');
+            if (s.requiresPaidApi) {
+                apiAlert.classList.remove('hidden');
+                const targetUrl = s.apiVendorUrl || 'https://clawhub.ai/skills';
+                apiBuyLink.href = `./api-purchase-guide.html?skill=${encodeURIComponent(s.name)}&vendor=${encodeURIComponent(s.apiVendor || '第三方服务商')}&target=${encodeURIComponent(targetUrl)}`;
+                apiBuyLink.innerText = s.apiVendor ? `购买 ${s.apiVendor} / 获取 API Key` : '查看购买方式';
+            } else {
+                apiAlert.classList.add('hidden');
+                apiBuyLink.href = 'https://clawhub.ai/skills';
+                apiBuyLink.innerText = '查看购买方式';
+            }
+            const capabilities = (s.capabilities || []).map(item => `• ${item}`).join('\n');
+            const workflow = (s.workflow || []).map((item, idx) => `${idx + 1}. ${item}`).join('\n');
+            const official = (window.SkillMdMap && s.slug) ? window.SkillMdMap[s.slug] : null;
+            const humanReadable =
+                (official && official.skillMdHuman) ||
+                s.skillMdHuman ||
+                `岗位简介：\n${s.desc}\n\n` +
+                `能做什么：\n${capabilities || '• 可按业务目标执行日常工作与流程优化'}\n\n` +
+                `工作步骤：\n${workflow || '1. 对齐目标\n2. 制定方案\n3. 执行交付\n4. 复盘优化'}\n\n` +
+                `开发者承诺：\n` +
+                `✓ 支持 7x24 小时高并发响应\n` +
+                `✓ 定期迭代提示词与知识库优化\n` +
+                `✓ 包含基础接入技术指导`;
+            const rawSkillMd =
+                (official && official.skillMdRaw)
+                || s.skillMdRaw
+                || `# ${s.name}\n\n## role\n${s.title}\n\n## steps\n${workflow || '1. analyze\n2. plan\n3. execute\n4. verify'}\n\n## capabilities\n${capabilities || '- workflow support'}`;
+            document.getElementById('skill-desc-human').innerText = humanReadable;
+            document.getElementById('skill-desc-raw').innerText = official && official.sourceUrl
+                ? `${rawSkillMd}\n\n---\n官方来源：${official.sourceUrl}`
+                : rawSkillMd;
+            switchResumeTab('human');
+
+            document.getElementById('skill-tags').innerHTML = s.skills.map(st => `<span class="tag">${st}</span>`).join('');
+            
+            const iconEl = document.getElementById('skill-icon');
+            iconEl.setAttribute('data-lucide', s.icon);
+            
+            const catColors = {
+                'marketing': ['#10b981', 'rgba(16,185,129,0.1)'],
+                'data': ['#3b82f6', 'rgba(37,99,235,0.1)'],
+                'service': ['#a855f7', 'rgba(168,85,247,0.1)'],
+                'design': ['#f43f5e', 'rgba(244,63,94,0.1)'],
+                'dev': ['#eab308', 'rgba(234,179,8,0.1)']
+            };
+            const colors = catColors[s.category] || ['#60a5fa', 'rgba(37,99,235,0.1)'];
+            iconEl.style.color = colors[0];
+            document.getElementById('header-glow').style.background = colors[1];
+
+            lucide.createIcons();
+        }
+
+        // 生成自然语言提示词
+        function generateHirePrompt(skill) {
+            const downloadUrl = skill.downloadUrl || `https://wry-manatee-359.convex.site/api/v1/download?slug=${skill.slug || skill.id}`;
+            const paidNote = skill.requiresPaidApi
+                ? `\n注意：该技能依赖第三方 API（${skill.apiVendor || '供应商 API'}），如无密钥请先购买并配置。`
+                : '';
+            return `帮我安装这个龙虾员工：
+名称：${skill.name}
+下载：${downloadUrl}
+${paidNote}
+请下载并解压，读取配置并完成部署自检。部署完成后只回复：
+1) 是否成功
+2) 启动命令
+3) 我第一句该怎么提问`;
+        }
+
+        // 打开弹窗
+        function openHireModal(skill) {
+            const prompt = generateHirePrompt(skill);
+            document.getElementById('hirePromptContent').textContent = prompt;
+            const modal = document.getElementById('hireModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // 重置复制按钮状态
+            const copyBtn = document.querySelector('.hire-copy-btn');
+            copyBtn.classList.remove('copied');
+            document.getElementById('copyBtnText').textContent = '复制';
+        }
+
+        // 关闭弹窗
+        function closeHireModal() {
+            const modal = document.getElementById('hireModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function openCustomModal() {
+            const modal = document.getElementById('customModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCustomModal() {
+            const modal = document.getElementById('customModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        function switchResumeTab(tab) {
+            const tabHuman = document.getElementById('tab-human');
+            const tabRaw = document.getElementById('tab-raw');
+            const panelHuman = document.getElementById('resume-panel-human');
+            const panelRaw = document.getElementById('resume-panel-raw');
+
+            if (tab === 'raw') {
+                tabHuman.classList.remove('active');
+                tabRaw.classList.add('active');
+                panelHuman.classList.add('hidden');
+                panelRaw.classList.remove('hidden');
+                return;
+            }
+
+            tabRaw.classList.remove('active');
+            tabHuman.classList.add('active');
+            panelRaw.classList.add('hidden');
+            panelHuman.classList.remove('hidden');
+        }
+
+        // 复制提示词
+        async function copyHirePrompt() {
+            const text = document.getElementById('hirePromptContent').textContent;
+            try {
+                await navigator.clipboard.writeText(text);
+                const copyBtn = document.querySelector('.hire-copy-btn');
+                copyBtn.classList.add('copied');
+                document.getElementById('copyBtnText').textContent = '已复制 ✓';
+                Toast.show('提示词已复制到剪贴板，快去粘贴给你的龙虾吧！', 'success');
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    document.getElementById('copyBtnText').textContent = '复制';
+                }, 3000);
+            } catch (err) {
+                // fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                Toast.show('提示词已复制到剪贴板！', 'success');
+            }
+        }
+
+        // 点击遮罩关闭
+        document.getElementById('hireModal').addEventListener('click', function(e) {
+            if (e.target === this) closeHireModal();
+        });
+        document.getElementById('customModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCustomModal();
+        });
+
+        // ESC 关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeHireModal();
+                closeCustomModal();
+            }
+        });
+
+        async function handleHire() {
+            // 模拟下单流程
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i> 处理中...';
+            btn.disabled = true;
+            lucide.createIcons({root: btn});
+
+            try {
+                await Store.add('orders', {
+                    userId: 'guest',
+                    skillId: currentSkill.id,
+                    price: 0,
+                    status: 'paid'
+                });
+                
+                // 恢复按钮状态
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                lucide.createIcons({root: btn});
+
+                // 弹出提示词弹窗
+                openHireModal(currentSkill);
+
+            } catch (err) {
+                Toast.show('系统繁忙，请稍后再试', 'error');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                lucide.createIcons({root: btn});
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDetail);
+    </script>
+</body>
+</html>
