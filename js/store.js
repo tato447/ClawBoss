@@ -276,6 +276,7 @@ const Store = {
                 { slug: 'zeelin-academic-paper', name: 'ZeeLin Academic Paper', title: '学术论文全流程写作助手', category: 'service', icon: 'graduation-cap', desc: '辅助生成论文标题、大纲、综述与结论结构。' },
                 { slug: 'zeelin-auto-ppt', name: 'ZeeLin Auto-PPT', title: '自动化演示文稿生成助手', category: 'design', icon: 'presentation', desc: '自动生成演示文稿并支持导出交付。' },
                 { slug: 'zeelin-claw-swarm', name: 'zeelin-claw-swarm', title: '多智能体协作群聊平台助手', category: 'dev', icon: 'network', desc: '用于多智能体协作交流与信息同步。' },
+                { slug: 'zeelin-social-autopublisher', name: 'ZeeLin Social AutoPublisher', title: '社媒内容自动发布助手', category: 'marketing', icon: 'send', desc: '将内容按平台规则自动适配并定时发布，覆盖公众号与主流社媒矩阵。', requiresPaidApi: true, apiVendor: 'ZeeLin', apiVendorUrl: 'https://clawhub.ai/kelcey2023/zeelin-social-autopublisher' },
                 { slug: 'zeelin-us-iran-war-tracker-en', name: 'Zeelin Tracker (EN)', title: '时效情报追踪助手（英文）', category: 'data', icon: 'globe', desc: '按时间窗口跟踪专题事件并汇总变化。' }
             ];
 
@@ -384,6 +385,52 @@ Deliver evidence-based analysis for business decisions.
 
             localStorage.setItem('lx_skills', JSON.stringify(patched));
             localStorage.setItem('lx_initialized', 'v8');
+        }
+
+        // v9 迁移：补充 zeelin-social-autopublisher 到推荐龙虾（兼容已初始化站点）
+        if (localStorage.getItem('lx_initialized') !== 'v9') {
+            const existingSkills = JSON.parse(localStorage.getItem('lx_skills') || '[]');
+            const slug = 'zeelin-social-autopublisher';
+            const hasSkill = existingSkills.some(skill => (skill.slug || '').toLowerCase() === slug);
+            const now = Date.now();
+
+            let nextSkills = existingSkills;
+            if (!hasSkill) {
+                const users = JSON.parse(localStorage.getItem('lx_users') || '[]');
+                const ownerPool = users.filter(u => u.role === 'developer' || u.role === 'admin').map(u => u.id);
+                const companyOwner = ownerPool[0] || 'admin';
+                const base = {
+                    id: `zl_${String(existingSkills.length + 1).padStart(3, '0')}`,
+                    developerId: companyOwner,
+                    name: 'ZeeLin Social AutoPublisher',
+                    title: '社媒内容自动发布助手',
+                    category: 'marketing',
+                    icon: 'send',
+                    price: 0,
+                    status: 'active',
+                    sales: 0,
+                    rating: 5.0,
+                    slug,
+                    downloadUrl: `https://wry-manatee-359.convex.site/api/v1/download?slug=${slug}`,
+                    requiresPaidApi: true,
+                    apiVendor: 'ZeeLin',
+                    apiVendorUrl: 'https://clawhub.ai/kelcey2023/zeelin-social-autopublisher',
+                    companyFeatured: true,
+                    desc: '将内容按平台规则自动适配并定时发布，覆盖公众号与主流社媒矩阵。',
+                    skills: ['ZeeLin', '自动发布', '企业场景'],
+                    created: now
+                };
+                nextSkills = [{ ...base, ...buildProfile(base) }, ...existingSkills];
+            }
+
+            const normalized = nextSkills.map(skill => {
+                const text = `${skill.slug || ''} ${skill.name || ''} ${skill.title || ''}`.toLowerCase();
+                const isCompany = text.includes('zeelin') || text.includes('智灵') || text.includes('desearch');
+                return isCompany ? { ...skill, companyFeatured: true } : skill;
+            });
+
+            localStorage.setItem('lx_skills', JSON.stringify(normalized));
+            localStorage.setItem('lx_initialized', 'v9');
         }
     },
 
