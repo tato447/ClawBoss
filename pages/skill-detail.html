@@ -461,20 +461,26 @@
             const capabilities = (s.capabilities || []).map(item => `• ${item}`).join('\n');
             const workflow = (s.workflow || []).map((item, idx) => `${idx + 1}. ${item}`).join('\n');
             const official = (window.SkillMdMap && s.slug) ? window.SkillMdMap[s.slug] : null;
-            const humanReadable =
-                (official && official.skillMdHuman) ||
-                s.skillMdHuman ||
-                `岗位简介：\n${s.desc}\n\n` +
-                `能做什么：\n${capabilities || '• 可按业务目标执行日常工作与流程优化'}\n\n` +
-                `工作步骤：\n${workflow || '1. 对齐目标\n2. 制定方案\n3. 执行交付\n4. 复盘优化'}\n\n` +
-                `开发者承诺：\n` +
-                `✓ 支持 7x24 小时高并发响应\n` +
-                `✓ 定期迭代提示词与知识库优化\n` +
-                `✓ 包含基础接入技术指导`;
             const rawSkillMd =
                 (official && official.skillMdRaw)
                 || s.skillMdRaw
                 || `# ${s.name}\n\n## role\n${s.title}\n\n## steps\n${workflow || '1. analyze\n2. plan\n3. execute\n4. verify'}\n\n## capabilities\n${capabilities || '- workflow support'}`;
+            const officialHuman = (official && official.skillMdHuman) || '';
+            const officialHumanLineCount = officialHuman.split('\n').map(v => v.trim()).filter(Boolean).length;
+            const humanReadable =
+                officialHumanLineCount > 2
+                    ? officialHuman
+                    : (
+                        buildHumanReadableFromRaw(rawSkillMd, s)
+                        || s.skillMdHuman
+                        || `岗位简介：\n${s.desc}\n\n` +
+                        `能做什么：\n${capabilities || '• 可按业务目标执行日常工作与流程优化'}\n\n` +
+                        `工作步骤：\n${workflow || '1. 对齐目标\n2. 制定方案\n3. 执行交付\n4. 复盘优化'}\n\n` +
+                        `开发者承诺：\n` +
+                        `✓ 支持 7x24 小时高并发响应\n` +
+                        `✓ 定期迭代提示词与知识库优化\n` +
+                        `✓ 包含基础接入技术指导`
+                    );
             document.getElementById('skill-desc-human').innerText = humanReadable;
             document.getElementById('skill-desc-raw').innerText = official && official.sourceUrl
                 ? `${rawSkillMd}\n\n---\n官方来源：${official.sourceUrl}`
@@ -498,6 +504,84 @@
             document.getElementById('header-glow').style.background = colors[1];
 
             lucide.createIcons();
+        }
+
+        function buildHumanReadableFromRaw(rawText, skill) {
+            if (!rawText || typeof rawText !== 'string') return '';
+            const lines = rawText.split('\n');
+
+            const firstTitle = lines.find(l => l.trim().startsWith('# '));
+            const title = firstTitle ? firstTitle.replace(/^#\s+/, '').trim() : (skill && skill.name) || '该龙虾员工';
+
+            let role = '';
+            const fmMatch = rawText.match(/^---\n([\s\S]*?)\n---/);
+            if (fmMatch) {
+                const fm = fmMatch[1].split('\n');
+                for (let i = 0; i < fm.length; i++) {
+                    const line = fm[i].trim();
+                    if (line.startsWith('description:')) {
+                        const rest = line.slice('description:'.length).trim();
+                        if (rest && rest !== '|') {
+                            role = rest.replace(/^["']|["']$/g, '');
+                        } else if (rest === '|') {
+                            const block = [];
+                            for (let j = i + 1; j < fm.length; j++) {
+                                const content = fm[j];
+                                if (!content.startsWith('  ')) break;
+                                block.push(content.trim());
+                            }
+                            role = block.join(' ').trim();
+                        }
+                        break;
+                    }
+                }
+            }
+            if (!role && skill && skill.desc) role = skill.desc;
+
+            const bullets = [];
+            const steps = [];
+            const commands = [];
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+                if (/^-\s+/.test(trimmed) && bullets.length < 6) bullets.push(trimmed.replace(/^-+\s+/, '').trim());
+                const stepMatch = trimmed.match(/^\d+\.\s+(.+)/);
+                if (stepMatch && steps.length < 6) steps.push(stepMatch[1].trim());
+                if ((trimmed.includes('run_social_ops_v5.sh') || trimmed.includes('run_continuous_ops.sh')) && commands.length < 3) {
+                    commands.push(trimmed);
+                }
+            }
+
+            if (!steps.length && rawText.includes('run_social_ops_v5.sh')) {
+                steps.push('确认本地 OpenClaw skills 目录并设置 SKILLS_ROOT');
+                steps.push('执行 run_social_ops_v5.sh 并传入运营主题');
+                steps.push('检查四平台发布结果与失败重试');
+                if (rawText.includes('run_continuous_ops.sh')) {
+                    steps.push('如需持续运营，启动 run_continuous_ops.sh 循环调度');
+                }
+            }
+
+            const abilityText = bullets.length
+                ? bullets.map(v => `• ${v}`).join('\n')
+                : [
+                    '• 按主题生成多平台运营内容',
+                    '• 统一编排社媒发布脚本并顺序执行',
+                    '• 支持连续循环调度，适合长期运营场景'
+                ].join('\n');
+
+            const stepText = steps.length
+                ? steps.map((v, i) => `${i + 1}. ${v}`).join('\n')
+                : [
+                    '1. 输入运营主题并确认平台范围',
+                    '2. 执行自动发布脚本完成内容分发',
+                    '3. 复盘发布结果并迭代下一轮选题'
+                ].join('\n');
+
+            const commandText = commands.length
+                ? `\n\n快速上手：\n${commands.map(v => `• ${v}`).join('\n')}`
+                : '';
+
+            return `${title} 的岗位解读：\n\n岗位定位：\n${role || '用于企业社媒自动化运营的技能包。'}\n\n能做什么：\n${abilityText}\n\n工作步骤：\n${stepText}${commandText}`;
         }
 
         // 生成自然语言提示词
