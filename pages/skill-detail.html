@@ -423,6 +423,9 @@
                 }
 
                 renderDetail();
+                if (params.get('autoHire') === '1') {
+                    setTimeout(() => openHireModal(currentSkill), 240);
+                }
             } catch (err) {
                 document.getElementById('loading').innerHTML = `
                 <div class="empty-state">

@@ -8,29 +8,33 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .hot-wrap { max-width: 920px; margin: 0 auto; }
-        .hot-row {
-            display: grid;
-            grid-template-columns: 72px 1fr 108px 96px;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 18px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+        .rank-shell { max-width: 1180px; margin: 0 auto; }
+        .top-zone { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; }
+        .top3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .top-card { text-align: center; padding: 20px 16px; }
+        .top-card-medal { font-size: 24px; margin-bottom: 6px; }
+        .top-card-score { color: #fff; font-size: 34px; font-weight: 800; margin-top: 8px; }
+        .rank-note li { color: #94a3b8; font-size: 13px; margin-bottom: 8px; line-height: 1.5; }
+        .rank-table-wrap { overflow: auto; }
+        .rank-table { width: 100%; border-collapse: collapse; min-width: 980px; }
+        .rank-table th, .rank-table td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .rank-table th { color: #94a3b8; font-size: 12px; text-align: left; font-weight: 600; }
+        .rank-col { color: #fff; font-size: 18px; font-weight: 800; width: 64px; text-align: center; }
+        .score-main { color: #fff; font-weight: 700; margin-bottom: 4px; }
+        .score-bar { width: 120px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.12); overflow: hidden; }
+        .score-bar span { display: block; height: 100%; background: linear-gradient(90deg,#4f46e5,#3b82f6); }
+        .trend { font-size: 12px; color: #94a3b8; }
+        .search-row { display: flex; gap: 12px; align-items: center; }
+        .search-input {
+            width: 320px; max-width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: #e2e8f0; padding: 10px 12px;
         }
-        .hot-rank {
-            font-weight: 800;
-            color: #f87171;
-            font-size: 20px;
-            text-align: center;
-        }
-        .hot-rank.normal { color: #93c5fd; }
-        .hot-title { color: #e5e7eb; font-weight: 600; }
-        .hot-sub { color: #94a3b8; font-size: 12px; margin-top: 2px; }
-        .hot-score { color: #e2e8f0; font-weight: 700; text-align: right; }
-        .hot-action { text-align: right; }
-        @media (max-width: 860px) {
-            .hot-row { grid-template-columns: 56px 1fr; }
-            .hot-score, .hot-action { text-align: left; }
+        @media (max-width: 980px) {
+            .top-zone { grid-template-columns: 1fr; }
+            .top3-grid { grid-template-columns: 1fr; }
+            .search-row { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -61,7 +65,7 @@
     </nav>
 
     <main class="page-content container pb-16">
-        <section class="mb-10 animate-in hot-wrap">
+        <section class="mb-10 animate-in rank-shell">
             <h1 class="text-4xl font-bold text-white mb-3">龙虾员工排行榜</h1>
             <p class="text-muted text-lg">每小时自动扫描并测评，只推荐免费且不依赖第三方付费 API 的企业可落地技能。</p>
             <div class="mt-6 grid grid-3">
@@ -80,7 +84,7 @@
             </div>
         </section>
 
-        <section class="animate-in animate-delay-1 hot-wrap">
+        <section class="animate-in animate-delay-1 rank-shell">
             <h2 id="board-title" class="text-2xl text-white font-bold mb-4">总榜</h2>
 
             <div id="loading" class="text-center py-20 text-muted">
@@ -88,8 +92,41 @@
                 正在加载排行榜...
             </div>
             <div id="leaderboard-wrap" class="hidden">
-                <div class="card p-0 overflow-hidden">
-                    <div id="leaderboard-list"></div>
+                <div class="top-zone mb-4">
+                    <div id="top3-cards" class="top3-grid"></div>
+                    <div class="card">
+                        <h3 class="text-white font-bold text-lg mb-3">评测维度说明</h3>
+                        <ul class="rank-note">
+                            <li><strong class="text-slate-200">企业落地度</strong>：能否直接解决企业业务问题</li>
+                            <li><strong class="text-slate-200">易用性</strong>：上手难度与文档清晰程度</li>
+                            <li><strong class="text-slate-200">稳定性</strong>：执行流程稳定与完整性</li>
+                            <li><strong class="text-slate-200">自动化程度</strong>：脚本化和流程化能力</li>
+                            <li><strong class="text-slate-200">时效热度</strong>：近期更新与关注趋势</li>
+                            <li><strong class="text-slate-200">安全合规</strong>：权限边界和风险说明完整度</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="search-row mb-4">
+                        <input id="leaderboard-search" class="search-input" type="text" placeholder="搜索技能名称或关键词...">
+                        <div class="text-xs text-muted">榜单每小时更新，支持一键进入详情并办理入职</div>
+                    </div>
+                    <div class="rank-table-wrap">
+                        <table class="rank-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:64px;">排名</th>
+                                    <th>技能名称</th>
+                                    <th>技能分类</th>
+                                    <th>综合得分</th>
+                                    <th>维度拆解（不变）</th>
+                                    <th style="width:140px; text-align:right;">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-table-body"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
