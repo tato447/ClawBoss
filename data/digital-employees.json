@@ -1,11 +1,11 @@
 {
   "meta": {
     "version": "v1",
-    "total_employees": 17,
-    "last_updated": "2026-04-26T00:50:09+08:00",
+    "total_employees": 18,
+    "last_updated": "2026-04-26T01:41:30+08:00",
     "daily_added": {
       "2026-04-25": 17,
-      "2026-04-26": 0
+      "2026-04-26": 1
     }
   },
   "employees": [
@@ -245,6 +245,20 @@
       "requires_paid_api": false,
       "score": 63.0,
       "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_zeelin-auto-ppt",
+      "slug": "zeelin-auto-ppt",
+      "name": "ZeeLin Auto-PPT",
+      "title": "自动化演示文稿生成助手",
+      "category": "design",
+      "source_url": "https://clawhub.ai/skills/zeelin-auto-ppt",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-auto-ppt",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 69.4,
+      "added_at": "2026-04-26T01:41:30+08:00",
       "from_board": true
     }
   ]
