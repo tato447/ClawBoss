@@ -412,10 +412,11 @@
             try {
                 const params = new URLSearchParams(window.location.search);
                 const id = params.get('id');
-                if(!id) throw new Error('无效的访问参数');
+                const slug = params.get('slug');
+                if(!id && !slug) throw new Error('无效的访问参数');
 
                 const skills = await Store.getSkillsWithAuthor();
-                currentSkill = skills.find(s => s.id === id);
+                currentSkill = skills.find(s => (id && s.id === id) || (slug && (s.slug || '').toLowerCase() === slug.toLowerCase()));
 
                 if(!currentSkill) {
                     throw new Error('未找到该龙虾员工或已下架');

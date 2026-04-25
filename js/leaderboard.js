@@ -139,10 +139,6 @@ function renderBoard(boardKey) {
     const boards = data.boards || {};
     const list = document.getElementById("leaderboard-list");
     const items = boards[boardKey] || [];
-
-    document.querySelectorAll(".board-tab").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.board === boardKey);
-    });
     document.getElementById("board-title").innerText = `${boardLabel(boardKey)}（${items.length}）`;
 
     if (!items.length) {
@@ -153,44 +149,22 @@ function renderBoard(boardKey) {
     list.innerHTML = items
         .map((item) => {
             const s = item.skill || {};
-            const reasons = (item.reasons || []).map((r) => `<li>${r}</li>`).join("");
-            const risks = (item.risks || []).map((r) => `<li>${r}</li>`).join("");
             const detailBase = location.pathname.includes("/pages/") ? "./skill-detail.html" : "./pages/skill-detail.html";
-            const detailLink = s.id ? `${detailBase}?id=${encodeURIComponent(s.id)}` : s.source_url;
+            const detailLink = s.slug
+                ? `${detailBase}?slug=${encodeURIComponent(s.slug)}`
+                : (s.id ? `${detailBase}?id=${encodeURIComponent(s.id)}` : s.source_url);
+            const rankClass = item.rank <= 3 ? "" : "normal";
 
             return `
-            <div class="card rank-card">
-                <div class="rank-head">
-                    <div class="flex items-center gap-3">
-                        <div class="rank-no">#${item.rank}</div>
-                        <div>
-                            <h3 class="text-white font-bold">${s.name || "-"}</h3>
-                            <p class="text-sm text-blue-300">${s.title || ""}</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-xl font-bold text-white">${item.score}</div>
-                        <div class="mt-1">${trendBadge(item)}</div>
-                    </div>
+            <div class="hot-row">
+                <div class="hot-rank ${rankClass}">${item.rank}</div>
+                <div>
+                    <div class="hot-title">${s.name || "-"}</div>
+                    <div class="hot-sub">${s.title || "企业可落地技能"} · 免费 · 无第三方付费API</div>
                 </div>
-                <div class="mt-3 flex flex-wrap gap-2">
-                    <span class="tag">免费</span>
-                    <span class="tag">无第三方付费API</span>
-                    <span class="tag">${boardLabel(s.category)}</span>
-                </div>
-                <div class="rank-grid mt-4">
-                    <div>
-                        <h4 class="text-white mb-2">上榜理由</h4>
-                        <ul class="text-sm text-slate-300 list-disc pl-5">${reasons || "<li>基础能力完整</li>"}</ul>
-                    </div>
-                    <div>
-                        <h4 class="text-white mb-2">风险提醒</h4>
-                        <ul class="text-sm text-slate-400 list-disc pl-5">${risks || "<li>暂无明显风险</li>"}</ul>
-                    </div>
-                </div>
-                <div class="mt-4 pt-4 border-t border-[rgba(255,255,255,0.08)] flex gap-3">
-                    <a class="btn btn-primary btn-sm" href="${detailLink}">查看详情</a>
-                    <a class="btn btn-ghost btn-sm" target="_blank" rel="noreferrer" href="${s.source_url || "#"}">官方来源</a>
+                <div class="hot-score">热度 ${item.score}</div>
+                <div class="hot-action">
+                    <a class="btn btn-primary btn-sm" href="${detailLink}">办理入职</a>
                 </div>
             </div>`;
         })
@@ -198,8 +172,5 @@ function renderBoard(boardKey) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".board-tab").forEach((btn) => {
-        btn.addEventListener("click", () => renderBoard(btn.dataset.board));
-    });
     loadLeaderboard();
 });

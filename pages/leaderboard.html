@@ -8,28 +8,30 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .rank-card .rank-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-        .rank-no {
-            min-width: 50px; height: 50px; border-radius: 12px;
-            background: linear-gradient(135deg, rgba(239,68,68,0.22), rgba(37,99,235,0.2));
-            border: 1px solid rgba(255,255,255,0.12);
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 800;
+        .hot-wrap { max-width: 920px; margin: 0 auto; }
+        .hot-row {
+            display: grid;
+            grid-template-columns: 72px 1fr 108px 96px;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-        .rank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .board-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
-        .board-tab {
-            padding: 8px 14px; border-radius: 9999px;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #94a3b8; background: rgba(255,255,255,0.03); cursor: pointer;
+        .hot-rank {
+            font-weight: 800;
+            color: #f87171;
+            font-size: 20px;
+            text-align: center;
         }
-        .board-tab.active { color: #fff; border-color: rgba(59,130,246,0.65); background: rgba(59,130,246,0.2); }
-        .badge-red {
-            background: rgba(239,68,68,0.15);
-            border: 1px solid rgba(239,68,68,0.35);
-            color: #fca5a5;
+        .hot-rank.normal { color: #93c5fd; }
+        .hot-title { color: #e5e7eb; font-weight: 600; }
+        .hot-sub { color: #94a3b8; font-size: 12px; margin-top: 2px; }
+        .hot-score { color: #e2e8f0; font-weight: 700; text-align: right; }
+        .hot-action { text-align: right; }
+        @media (max-width: 860px) {
+            .hot-row { grid-template-columns: 56px 1fr; }
+            .hot-score, .hot-action { text-align: left; }
         }
-        @media (max-width: 900px) { .rank-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body class="bg-glow">
@@ -42,7 +44,6 @@
             <div class="navbar-menu hidden lg:flex" id="navbar-menu">
                 <a href="../index.html" class="nav-link">首页</a>
                 <a href="./marketplace.html" class="nav-link">龙虾员工</a>
-                <a href="./leaderboard.html" class="nav-link">排行榜</a>
                 <a href="./custom.html" class="nav-link">定制员工</a>
             </div>
             <div class="navbar-actions">
@@ -55,13 +56,12 @@
         <div class="mobile-menu" id="mobileMenu">
             <a href="../index.html" class="nav-link">首页</a>
             <a href="./marketplace.html" class="nav-link">龙虾员工</a>
-            <a href="./leaderboard.html" class="nav-link">排行榜</a>
             <a href="./custom.html" class="nav-link">定制员工</a>
         </div>
     </nav>
 
     <main class="page-content container pb-16">
-        <section class="mb-10 animate-in">
+        <section class="mb-10 animate-in hot-wrap">
             <h1 class="text-4xl font-bold text-white mb-3">龙虾员工排行榜</h1>
             <p class="text-muted text-lg">每小时自动扫描并测评，只推荐免费且不依赖第三方付费 API 的企业可落地技能。</p>
             <div class="mt-6 grid grid-3">
@@ -80,15 +80,7 @@
             </div>
         </section>
 
-        <section class="animate-in animate-delay-1">
-            <div class="board-tabs mb-4">
-                <button class="board-tab active" data-board="overall">总榜</button>
-                <button class="board-tab" data-board="marketing">营销/内容</button>
-                <button class="board-tab" data-board="sales">销售增长</button>
-                <button class="board-tab" data-board="service">客户服务</button>
-                <button class="board-tab" data-board="data">数据分析</button>
-                <button class="board-tab" data-board="automation">自动化</button>
-            </div>
+        <section class="animate-in animate-delay-1 hot-wrap">
             <h2 id="board-title" class="text-2xl text-white font-bold mb-4">总榜</h2>
 
             <div id="loading" class="text-center py-20 text-muted">
@@ -96,7 +88,9 @@
                 正在加载排行榜...
             </div>
             <div id="leaderboard-wrap" class="hidden">
-                <div id="leaderboard-list" class="grid gap-4"></div>
+                <div class="card p-0 overflow-hidden">
+                    <div id="leaderboard-list"></div>
+                </div>
             </div>
         </section>
     </main>
