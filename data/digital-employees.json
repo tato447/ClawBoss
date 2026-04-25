@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "version": "v1",
+    "daily_target": 100,
+    "total_employees": 9,
+    "last_updated": "2026-04-25T23:05:38+08:00",
+    "daily_added": {
+      "2026-04-25": 9
+    }
+  },
+  "employees": [
+    {
+      "id": "slug_find-skills-for-clawhub",
+      "slug": "find-skills-for-clawhub",
+      "name": "技能采购龙虾",
+      "title": "企业场景技能选型助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/find-skills-for-clawhub",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=find-skills-for-clawhub",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 75.0,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_social-media-lead-generation",
+      "slug": "social-media-lead-generation",
+      "name": "社媒获客龙虾",
+      "title": "社媒线索转化助手",
+      "category": "marketing",
+      "source_url": "https://clawhub.ai/skills/social-media-lead-generation",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=social-media-lead-generation",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 65.8,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "ch_ai_data",
+      "slug": "ai-data-analysis",
+      "name": "智能报表龙虾",
+      "title": "AI 数据洞察与复盘",
+      "category": "data",
+      "source_url": "https://clawhub.ai/skills/ai-data-analysis",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=ai-data-analysis",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 65.7,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_automate",
+      "slug": "automate",
+      "name": "自动化执行龙虾",
+      "title": "高频任务自动化助手",
+      "category": "automation",
+      "source_url": "https://clawhub.ai/skills/automate",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=automate",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 64.8,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_afrexai-lead-hunter",
+      "slug": "afrexai-lead-hunter",
+      "name": "线索猎手龙虾",
+      "title": "B2B 发现-评分-外联助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/afrexai-lead-hunter",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=afrexai-lead-hunter",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 63.2,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_database-operations",
+      "slug": "database-operations",
+      "name": "数据库运维龙虾",
+      "title": "数据库性能与运维助手",
+      "category": "automation",
+      "source_url": "https://clawhub.ai/skills/database-operations",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=database-operations",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 63.2,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_britebooth-procurement",
+      "slug": "britebooth-procurement",
+      "name": "采购清单龙虾",
+      "title": "采购资料整理与交付助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/britebooth-procurement",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=britebooth-procurement",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 62.0,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_zeelin-social-autopublisher",
+      "slug": "zeelin-social-autopublisher",
+      "name": "ZeeLin Social AutoPublisher",
+      "title": "社媒内容自动发布助手",
+      "category": "marketing",
+      "source_url": "https://clawhub.ai/skills/zeelin-social-autopublisher",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-social-autopublisher",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 57.8,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_crm",
+      "slug": "crm",
+      "name": "客户管理龙虾",
+      "title": "CRM 客户跟进助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/crm",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=crm",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 55.2,
+      "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    }
+  ]
+}

@@ -4,6 +4,7 @@
  */
 
 const Store = {
+    _digitalSynced: false,
     // 初始化数据
     init() {
         const buildProfile = (skill) => {
@@ -449,6 +450,18 @@ Deliver evidence-based analysis for business decisions.
             localStorage.setItem('lx_skills', JSON.stringify(fixed));
             localStorage.setItem('lx_initialized', 'v10');
         }
+
+        // v11 迁移：全站只保留免费且不依赖第三方付费接口的龙虾员工
+        if (localStorage.getItem('lx_initialized') !== 'v11') {
+            const existingSkills = JSON.parse(localStorage.getItem('lx_skills') || '[]');
+            const freeOnly = existingSkills.filter(skill => {
+                const isFree = Number(skill.price || 0) === 0;
+                const noPaidApi = !skill.requiresPaidApi;
+                return isFree && noPaidApi;
+            });
+            localStorage.setItem('lx_skills', JSON.stringify(freeOnly));
+            localStorage.setItem('lx_initialized', 'v11');
+        }
     },
 
     // 辅助工具：生成ID
@@ -510,12 +523,69 @@ Deliver evidence-based analysis for business decisions.
 
     // 组合查询：获取带开发者信息的 Skill
     async getSkillsWithAuthor() {
+        await this._syncDigitalEmployeesFromFile();
         const skills = await this.get('skills');
         const users = await this.get('users');
-        return skills.map(skill => {
+        const freeSkills = skills.filter(skill => Number(skill.price || 0) === 0 && !skill.requiresPaidApi);
+        return freeSkills.map(skill => {
             const author = users.find(u => u.id === skill.developerId) || { name: '未知开发者' };
             return { ...skill, authorName: author.name };
         });
+    },
+
+    async _syncDigitalEmployeesFromFile() {
+        if (this._digitalSynced) return;
+        this._digitalSynced = true;
+        try {
+            const path = location.pathname.includes('/pages/') ? '../data/digital-employees.json' : './data/digital-employees.json';
+            const res = await fetch(`${path}?t=${Date.now()}`);
+            if (!res.ok) return;
+            const payload = await res.json();
+            const employees = Array.isArray(payload.employees) ? payload.employees : [];
+            if (!employees.length) return;
+
+            const skills = await this.get('skills');
+            const users = await this.get('users');
+            const ownerPool = users.filter(u => u.role === 'developer' || u.role === 'admin').map(u => u.id);
+            const companyOwner = ownerPool[0] || 'admin';
+
+            const bySlug = new Map(skills.map(s => [(s.slug || '').toLowerCase(), s]));
+            let changed = false;
+            for (const item of employees) {
+                const slug = (item.slug || '').toLowerCase();
+                if (!slug || bySlug.has(slug)) continue;
+                const base = {
+                    id: item.id || `rank_${slug}`,
+                    developerId: companyOwner,
+                    name: item.name || slug,
+                    title: item.title || '企业可落地技能',
+                    category: item.category || 'dev',
+                    icon: 'bot',
+                    price: 0,
+                    status: 'active',
+                    sales: 0,
+                    rating: 5.0,
+                    slug,
+                    downloadUrl: item.download_url || `https://wry-manatee-359.convex.site/api/v1/download?slug=${slug}`,
+                    requiresPaidApi: false,
+                    apiVendor: '',
+                    apiVendorUrl: '',
+                    companyFeatured: true,
+                    desc: '来自龙虾员工排行榜自动累计的可落地技能。',
+                    skills: ['排行榜', '免费', '企业场景'],
+                    created: Date.now()
+                };
+                skills.unshift(base);
+                bySlug.set(slug, base);
+                changed = true;
+            }
+
+            if (changed) {
+                await this.set('skills', skills);
+            }
+        } catch (e) {
+            // ignore sync errors to avoid blocking the page
+        }
     }
 };
 
