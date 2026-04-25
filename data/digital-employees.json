@@ -1,11 +1,10 @@
 {
   "meta": {
     "version": "v1",
-    "daily_target": 100,
-    "total_employees": 11,
-    "last_updated": "2026-04-25T23:43:25+08:00",
+    "total_employees": 17,
+    "last_updated": "2026-04-25T23:51:43+08:00",
     "daily_added": {
-      "2026-04-25": 11
+      "2026-04-25": 17
     }
   },
   "employees": [
@@ -161,6 +160,90 @@
       "requires_paid_api": false,
       "score": 69.2,
       "added_at": "2026-04-25T23:43:25+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_workflows",
+      "slug": "workflows",
+      "name": "流程编排龙虾",
+      "title": "工作流设计与评估助手",
+      "category": "automation",
+      "source_url": "https://clawhub.ai/skills/workflows",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=workflows",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 77.5,
+      "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_revenue-operations",
+      "slug": "revenue-operations",
+      "name": "RevOps龙虾",
+      "title": "收入运营分析助手",
+      "category": "data",
+      "source_url": "https://clawhub.ai/skills/revenue-operations",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=revenue-operations",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 75.0,
+      "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_finance-accounting",
+      "slug": "finance-accounting",
+      "name": "财务会计龙虾",
+      "title": "财务核算与报表助手",
+      "category": "data",
+      "source_url": "https://clawhub.ai/skills/finance-accounting",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=finance-accounting",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 72.0,
+      "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_recruiting",
+      "slug": "recruiting",
+      "name": "人才筛选龙虾",
+      "title": "候选人筛选与流程跟进",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/recruiting",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=recruiting",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 70.1,
+      "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_agentic-workflow-automation",
+      "slug": "agentic-workflow-automation",
+      "name": "流程自动化龙虾",
+      "title": "多步骤自动化蓝图生成",
+      "category": "automation",
+      "source_url": "https://clawhub.ai/skills/agentic-workflow-automation",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=agentic-workflow-automation",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 68.7,
+      "added_at": "2026-04-25T23:51:43+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_oee-crm-intelligence",
+      "slug": "oee-crm-intelligence",
+      "name": "CRM情报龙虾",
+      "title": "联系人优先级评分助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/oee-crm-intelligence",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=oee-crm-intelligence",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 63.0,
+      "added_at": "2026-04-25T23:51:43+08:00",
       "from_board": true
     }
   ]

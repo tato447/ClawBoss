@@ -299,7 +299,7 @@ def assign_ranks(items, previous_rank_map):
 def load_digital_employees():
     if not DIGITAL_EMPLOYEES_PATH.exists():
         return {
-            "meta": {"version": "v1", "daily_target": 100, "total_employees": 0, "last_updated": "", "daily_added": {}},
+            "meta": {"version": "v1", "total_employees": 0, "last_updated": "", "daily_added": {}},
             "employees": [],
         }
     try:
@@ -308,10 +308,11 @@ def load_digital_employees():
         data = {"meta": {}, "employees": []}
     data.setdefault("meta", {})
     data["meta"].setdefault("version", "v1")
-    data["meta"].setdefault("daily_target", 100)
     data["meta"].setdefault("total_employees", len(data.get("employees") or []))
     data["meta"].setdefault("last_updated", "")
     data["meta"].setdefault("daily_added", {})
+    if "daily_target" in data["meta"]:
+        data["meta"].pop("daily_target", None)
     data.setdefault("employees", [])
     return data
 
@@ -321,15 +322,11 @@ def update_digital_employees(qualified_this_run, now_iso, day_key):
     existing = data.get("employees") or []
     existing_slug_set = {e.get("slug") for e in existing if e.get("slug")}
 
-    daily_target = int((data.get("meta") or {}).get("daily_target", 100))
     daily_added = data["meta"].get("daily_added") or {}
     already = int(daily_added.get(day_key, 0))
-    remain = max(0, daily_target - already)
 
     added = 0
     for item in sorted(qualified_this_run, key=lambda x: x.get("score", 0), reverse=True):
-        if added >= remain:
-            break
         s = item.get("skill") or {}
         slug = s.get("slug")
         if not slug or slug in existing_slug_set:
@@ -359,7 +356,7 @@ def update_digital_employees(qualified_this_run, now_iso, day_key):
     data["meta"]["last_updated"] = now_iso
     data["employees"] = existing
     DIGITAL_EMPLOYEES_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    return added, len(existing), daily_target
+    return added, len(existing)
 
 
 def main():
@@ -374,11 +371,17 @@ def main():
     state = load_state(day_key)
 
     discovered = discover_skill_slugs(store_skill_map)
-    batch = pick_hourly_batch(discovered, state.get("seen_today", []), size=10)
+    target_qualified_per_run = 10
+    # 为了尽量凑够“每小时合格 10 个”，每轮最多评估 80 个新候选
+    candidate_pool = pick_hourly_batch(discovered, state.get("seen_today", []), size=80)
     filtered_stats = {"non_free": 0, "has_paid_api": 0, "non_enterprise": 0, "non_executable": 0}
     qualified_this_run = []
+    scanned_this_run = []
 
-    for slug in batch:
+    for slug in candidate_pool:
+        if len(qualified_this_run) >= target_qualified_per_run:
+            break
+        scanned_this_run.append(slug)
         readme_text, source_url = fetch_readme(slug)
         if not readme_text:
             local = local_skill_map.get(slug) or {}
@@ -424,8 +427,8 @@ def main():
             "generated_at": now_iso,
             "version": "v2",
             "day_key": day_key,
-            "hourly_target": 10,
-            "fetched_this_run": len(batch),
+            "hourly_target_qualified": target_qualified_per_run,
+            "scanned_this_run": len(scanned_this_run),
             "qualified_this_run": len(qualified_this_run),
             "total_candidates_today": len(candidates_today),
             "total_qualified": len(ranked_overall),
@@ -437,18 +440,17 @@ def main():
 
     state["day_key"] = day_key
     state["last_run"] = now_iso
-    state["seen_today"] = list(dict.fromkeys((state.get("seen_today", []) + batch)))
+    state["seen_today"] = list(dict.fromkeys((state.get("seen_today", []) + scanned_this_run)))
     state["candidates"] = candidates_today
     STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    added_today, total_employees, daily_target = update_digital_employees(qualified_this_run, now_iso, day_key)
+    added_today, total_employees = update_digital_employees(qualified_this_run, now_iso, day_key)
 
     print(f"written: {OUTPUT_PATH}")
     print(f"state: {STATE_PATH}")
-    print(f"day={day_key} fetched={len(batch)} qualified_run={len(qualified_this_run)} top10={len(ranked_overall)}")
-    print(f"digital_employees: total={total_employees}, added_today={added_today}, daily_target={daily_target}")
+    print(f"day={day_key} scanned={len(scanned_this_run)} qualified_run={len(qualified_this_run)} top10={len(ranked_overall)}")
+    print(f"digital_employees: total={total_employees}, added_today={added_today}")
 
 
 if __name__ == "__main__":
     main()
-
