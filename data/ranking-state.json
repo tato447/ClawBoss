@@ -1,5 +1,5 @@
 {
-  "day_key": "2026-04-25",
+  "day_key": "2026-04-26",
   "seen_today": [
     "wechat-official-account",
     "product-compare",
@@ -42,22 +42,7 @@
     "legal",
     "project-manager",
     "ops",
-    "agentic-workflow-automation",
-    "automate",
-    "workflows",
-    "finance-accounting",
-    "accounting",
-    "invoice",
-    "ecommerce",
-    "amazon",
-    "amazon-analysis-skill",
-    "autonomous-commerce",
-    "inventory",
-    "afrexai-inventory-supply-chain",
-    "afrexai-logistics-optimizer",
-    "cin7-inventory",
-    "zoho-inventory",
-    "britebooth-procurement"
+    "agentic-workflow-automation"
   ],
   "candidates": [
     {
@@ -352,123 +337,7 @@
         "文档步骤描述较弱，首次接入可能需要二次梳理",
         "安全与权限说明较少，建议上线前补充审计"
       ]
-    },
-    {
-      "score": 64.8,
-      "skill": {
-        "id": "slug_automate",
-        "slug": "automate",
-        "name": "自动化执行龙虾",
-        "title": "高频任务自动化助手",
-        "category": "automation",
-        "source_url": "https://clawhub.ai/skills/automate",
-        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=automate",
-        "is_free": true,
-        "requires_paid_api": false
-      },
-      "dimensions": {
-        "business_fit": 20.0,
-        "usability": 8.0,
-        "stability": 20,
-        "automation": 10.8,
-        "heat": 4.0,
-        "security": 2
-      },
-      "reasons": [
-        "包含可执行命令或自动化入口，可快速接入",
-        "具备明确输出结果定义，便于业务验收"
-      ],
-      "risks": [
-        "文档步骤描述较弱，首次接入可能需要二次梳理",
-        "安全与权限说明较少，建议上线前补充审计"
-      ]
-    },
-    {
-      "score": 77.5,
-      "skill": {
-        "id": "slug_workflows",
-        "slug": "workflows",
-        "name": "流程编排龙虾",
-        "title": "工作流设计与评估助手",
-        "category": "automation",
-        "source_url": "https://clawhub.ai/skills/workflows",
-        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=workflows",
-        "is_free": true,
-        "requires_paid_api": false
-      },
-      "dimensions": {
-        "business_fit": 20.0,
-        "usability": 14.0,
-        "stability": 20,
-        "automation": 15,
-        "heat": 4.0,
-        "security": 4.5
-      },
-      "reasons": [
-        "包含可执行命令或自动化入口，可快速接入",
-        "具备明确输出结果定义，便于业务验收"
-      ],
-      "risks": [
-        "文档步骤描述较弱，首次接入可能需要二次梳理"
-      ]
-    },
-    {
-      "score": 72.0,
-      "skill": {
-        "id": "slug_finance-accounting",
-        "slug": "finance-accounting",
-        "name": "财务会计龙虾",
-        "title": "财务核算与报表助手",
-        "category": "data",
-        "source_url": "https://clawhub.ai/skills/finance-accounting",
-        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=finance-accounting",
-        "is_free": true,
-        "requires_paid_api": false
-      },
-      "dimensions": {
-        "business_fit": 20.0,
-        "usability": 8.0,
-        "stability": 20,
-        "automation": 15,
-        "heat": 4.0,
-        "security": 5
-      },
-      "reasons": [
-        "包含可执行命令或自动化入口，可快速接入",
-        "具备明确输出结果定义，便于业务验收"
-      ],
-      "risks": [
-        "文档步骤描述较弱，首次接入可能需要二次梳理"
-      ]
-    },
-    {
-      "score": 62.0,
-      "skill": {
-        "id": "slug_britebooth-procurement",
-        "slug": "britebooth-procurement",
-        "name": "采购清单龙虾",
-        "title": "采购资料整理与交付助手",
-        "category": "service",
-        "source_url": "https://clawhub.ai/skills/britebooth-procurement",
-        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=britebooth-procurement",
-        "is_free": true,
-        "requires_paid_api": false
-      },
-      "dimensions": {
-        "business_fit": 20.0,
-        "usability": 8.0,
-        "stability": 17.9,
-        "automation": 7.6,
-        "heat": 4.0,
-        "security": 4.5
-      },
-      "reasons": [
-        "具备明确输出结果定义，便于业务验收"
-      ],
-      "risks": [
-        "文档步骤描述较弱，首次接入可能需要二次梳理"
-      ]
     }
   ],
-  "last_run": "2026-04-25T23:51:43+08:00"
+  "last_run": "2026-04-26T00:50:09+08:00"
 }
