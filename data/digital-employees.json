@@ -2,10 +2,10 @@
   "meta": {
     "version": "v1",
     "daily_target": 100,
-    "total_employees": 9,
-    "last_updated": "2026-04-25T23:05:38+08:00",
+    "total_employees": 11,
+    "last_updated": "2026-04-25T23:43:25+08:00",
     "daily_added": {
-      "2026-04-25": 9
+      "2026-04-25": 11
     }
   },
   "employees": [
@@ -133,6 +133,34 @@
       "requires_paid_api": false,
       "score": 55.2,
       "added_at": "2026-04-25T23:04:27+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_wechat-toolkit",
+      "slug": "wechat-toolkit",
+      "name": "微信工具龙虾",
+      "title": "私域运营自动化助手",
+      "category": "service",
+      "source_url": "https://clawhub.ai/skills/wechat-toolkit",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=wechat-toolkit",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 78.0,
+      "added_at": "2026-04-25T23:43:25+08:00",
+      "from_board": true
+    },
+    {
+      "id": "slug_content-creator-cn",
+      "slug": "content-creator-cn",
+      "name": "内容创作龙虾",
+      "title": "全平台营销内容生成",
+      "category": "marketing",
+      "source_url": "https://clawhub.ai/skills/content-creator-cn",
+      "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=content-creator-cn",
+      "is_free": true,
+      "requires_paid_api": false,
+      "score": 69.2,
+      "added_at": "2026-04-25T23:43:25+08:00",
       "from_board": true
     }
   ]
