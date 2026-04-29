@@ -42,7 +42,34 @@
     "legal",
     "project-manager",
     "ops",
-    "agentic-workflow-automation"
+    "agentic-workflow-automation",
+    "automate",
+    "workflows",
+    "finance-accounting",
+    "accounting",
+    "invoice",
+    "ecommerce",
+    "amazon",
+    "amazon-analysis-skill",
+    "autonomous-commerce",
+    "inventory",
+    "afrexai-inventory-supply-chain",
+    "afrexai-logistics-optimizer",
+    "cin7-inventory",
+    "zoho-inventory",
+    "britebooth-procurement",
+    "sap",
+    "database-operations",
+    "skill-seo",
+    "find-skills-for-clawhub",
+    "zeelin-deep-research",
+    "desearch",
+    "zeelin-social-watch",
+    "zeelin-academic-paper",
+    "zeelin-auto-ppt",
+    "zeelin-claw-swarm",
+    "zeelin-social-autopublisher",
+    "zeelin-us-iran-war-tracker-en"
   ],
   "candidates": [
     {
@@ -337,7 +364,241 @@
         "文档步骤描述较弱，首次接入可能需要二次梳理",
         "安全与权限说明较少，建议上线前补充审计"
       ]
+    },
+    {
+      "score": 64.8,
+      "skill": {
+        "id": "slug_automate",
+        "slug": "automate",
+        "name": "自动化执行龙虾",
+        "title": "高频任务自动化助手",
+        "category": "automation",
+        "source_url": "https://clawhub.ai/skills/automate",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=automate",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 8.0,
+        "stability": 20,
+        "automation": 10.8,
+        "heat": 4.0,
+        "security": 2
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理",
+        "安全与权限说明较少，建议上线前补充审计"
+      ]
+    },
+    {
+      "score": 77.5,
+      "skill": {
+        "id": "slug_workflows",
+        "slug": "workflows",
+        "name": "流程编排龙虾",
+        "title": "工作流设计与评估助手",
+        "category": "automation",
+        "source_url": "https://clawhub.ai/skills/workflows",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=workflows",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 14.0,
+        "stability": 20,
+        "automation": 15,
+        "heat": 4.0,
+        "security": 4.5
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理"
+      ]
+    },
+    {
+      "score": 72.0,
+      "skill": {
+        "id": "slug_finance-accounting",
+        "slug": "finance-accounting",
+        "name": "财务会计龙虾",
+        "title": "财务核算与报表助手",
+        "category": "data",
+        "source_url": "https://clawhub.ai/skills/finance-accounting",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=finance-accounting",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 8.0,
+        "stability": 20,
+        "automation": 15,
+        "heat": 4.0,
+        "security": 5
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理"
+      ]
+    },
+    {
+      "score": 62.0,
+      "skill": {
+        "id": "slug_britebooth-procurement",
+        "slug": "britebooth-procurement",
+        "name": "采购清单龙虾",
+        "title": "采购资料整理与交付助手",
+        "category": "service",
+        "source_url": "https://clawhub.ai/skills/britebooth-procurement",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=britebooth-procurement",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 8.0,
+        "stability": 17.9,
+        "automation": 7.6,
+        "heat": 4.0,
+        "security": 4.5
+      },
+      "reasons": [
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理"
+      ]
+    },
+    {
+      "score": 63.2,
+      "skill": {
+        "id": "slug_database-operations",
+        "slug": "database-operations",
+        "name": "数据库运维龙虾",
+        "title": "数据库性能与运维助手",
+        "category": "automation",
+        "source_url": "https://clawhub.ai/skills/database-operations",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=database-operations",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 8.0,
+        "stability": 20,
+        "automation": 9.2,
+        "heat": 4.0,
+        "security": 2
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理",
+        "安全与权限说明较少，建议上线前补充审计"
+      ]
+    },
+    {
+      "score": 75.0,
+      "skill": {
+        "id": "slug_find-skills-for-clawhub",
+        "slug": "find-skills-for-clawhub",
+        "name": "技能采购龙虾",
+        "title": "企业场景技能选型助手",
+        "category": "service",
+        "source_url": "https://clawhub.ai/skills/find-skills-for-clawhub",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=find-skills-for-clawhub",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 14.0,
+        "stability": 20,
+        "automation": 15,
+        "heat": 4.0,
+        "security": 2
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理",
+        "安全与权限说明较少，建议上线前补充审计"
+      ]
+    },
+    {
+      "score": 69.4,
+      "skill": {
+        "id": "slug_zeelin-auto-ppt",
+        "slug": "zeelin-auto-ppt",
+        "name": "ZeeLin Auto-PPT",
+        "title": "自动化演示文稿生成助手",
+        "category": "design",
+        "source_url": "https://clawhub.ai/skills/zeelin-auto-ppt",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-auto-ppt",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 20.0,
+        "usability": 8.0,
+        "stability": 20,
+        "automation": 12.4,
+        "heat": 4.0,
+        "security": 5
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入",
+        "具备明确输出结果定义，便于业务验收"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理"
+      ]
+    },
+    {
+      "score": 52.9,
+      "skill": {
+        "id": "slug_zeelin-social-autopublisher",
+        "slug": "zeelin-social-autopublisher",
+        "name": "ZeeLin Social AutoPublisher",
+        "title": "社媒内容自动发布助手",
+        "category": "marketing",
+        "source_url": "https://clawhub.ai/skills/zeelin-social-autopublisher",
+        "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-social-autopublisher",
+        "is_free": true,
+        "requires_paid_api": false
+      },
+      "dimensions": {
+        "business_fit": 14.0,
+        "usability": 8.0,
+        "stability": 15.7,
+        "automation": 9.2,
+        "heat": 4.0,
+        "security": 2
+      },
+      "reasons": [
+        "包含可执行命令或自动化入口，可快速接入"
+      ],
+      "risks": [
+        "文档步骤描述较弱，首次接入可能需要二次梳理",
+        "安全与权限说明较少，建议上线前补充审计"
+      ]
     }
   ],
-  "last_run": "2026-04-30T01:42:16+08:00"
+  "last_run": "2026-04-30T03:42:25+08:00"
 }
