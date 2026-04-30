@@ -1,18 +1,18 @@
 {
   "meta": {
-    "generated_at": "2026-05-01T01:24:32+08:00",
+    "generated_at": "2026-05-01T03:39:21+08:00",
     "version": "v2",
     "day_key": "2026-05-01",
     "hourly_target_qualified": 10,
-    "scanned_this_run": 42,
-    "qualified_this_run": 10,
-    "total_candidates_today": 10,
+    "scanned_this_run": 27,
+    "qualified_this_run": 8,
+    "total_candidates_today": 18,
     "total_qualified": 10,
     "filtered_this_run": {
-      "non_free": 5,
-      "has_paid_api": 12,
-      "non_enterprise": 5,
-      "non_executable": 10
+      "non_free": 8,
+      "has_paid_api": 5,
+      "non_enterprise": 3,
+      "non_executable": 3
     }
   },
   "boards": {
@@ -51,9 +51,41 @@
       },
       {
         "rank": 2,
+        "score": 77.5,
+        "trend": "new",
+        "delta_rank_24h": 0,
+        "skill": {
+          "id": "slug_workflows",
+          "slug": "workflows",
+          "name": "流程编排龙虾",
+          "title": "工作流设计与评估助手",
+          "category": "automation",
+          "source_url": "https://clawhub.ai/skills/workflows",
+          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=workflows",
+          "is_free": true,
+          "requires_paid_api": false
+        },
+        "dimensions": {
+          "business_fit": 20.0,
+          "usability": 14.0,
+          "stability": 20,
+          "automation": 15,
+          "heat": 4.0,
+          "security": 4.5
+        },
+        "reasons": [
+          "包含可执行命令或自动化入口，可快速接入",
+          "具备明确输出结果定义，便于业务验收"
+        ],
+        "risks": [
+          "文档步骤描述较弱，首次接入可能需要二次梳理"
+        ]
+      },
+      {
+        "rank": 3,
         "score": 75.0,
-        "trend": "up",
-        "delta_rank_24h": 1,
+        "trend": "down",
+        "delta_rank_24h": -1,
         "skill": {
           "id": "slug_revenue-operations",
           "slug": "revenue-operations",
@@ -83,10 +115,75 @@
         ]
       },
       {
-        "rank": 3,
+        "rank": 4,
+        "score": 75.0,
+        "trend": "new",
+        "delta_rank_24h": 0,
+        "skill": {
+          "id": "slug_find-skills-for-clawhub",
+          "slug": "find-skills-for-clawhub",
+          "name": "技能采购龙虾",
+          "title": "企业场景技能选型助手",
+          "category": "service",
+          "source_url": "https://clawhub.ai/skills/find-skills-for-clawhub",
+          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=find-skills-for-clawhub",
+          "is_free": true,
+          "requires_paid_api": false
+        },
+        "dimensions": {
+          "business_fit": 20.0,
+          "usability": 14.0,
+          "stability": 20,
+          "automation": 15,
+          "heat": 4.0,
+          "security": 2
+        },
+        "reasons": [
+          "包含可执行命令或自动化入口，可快速接入",
+          "具备明确输出结果定义，便于业务验收"
+        ],
+        "risks": [
+          "文档步骤描述较弱，首次接入可能需要二次梳理",
+          "安全与权限说明较少，建议上线前补充审计"
+        ]
+      },
+      {
+        "rank": 5,
+        "score": 72.0,
+        "trend": "new",
+        "delta_rank_24h": 0,
+        "skill": {
+          "id": "slug_finance-accounting",
+          "slug": "finance-accounting",
+          "name": "财务会计龙虾",
+          "title": "财务核算与报表助手",
+          "category": "data",
+          "source_url": "https://clawhub.ai/skills/finance-accounting",
+          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=finance-accounting",
+          "is_free": true,
+          "requires_paid_api": false
+        },
+        "dimensions": {
+          "business_fit": 20.0,
+          "usability": 8.0,
+          "stability": 20,
+          "automation": 15,
+          "heat": 4.0,
+          "security": 5
+        },
+        "reasons": [
+          "包含可执行命令或自动化入口，可快速接入",
+          "具备明确输出结果定义，便于业务验收"
+        ],
+        "risks": [
+          "文档步骤描述较弱，首次接入可能需要二次梳理"
+        ]
+      },
+      {
+        "rank": 6,
         "score": 70.1,
-        "trend": "up",
-        "delta_rank_24h": 3,
+        "trend": "down",
+        "delta_rank_24h": -3,
         "skill": {
           "id": "slug_recruiting",
           "slug": "recruiting",
@@ -114,10 +211,42 @@
         ]
       },
       {
-        "rank": 4,
+        "rank": 7,
+        "score": 69.4,
+        "trend": "new",
+        "delta_rank_24h": 0,
+        "skill": {
+          "id": "slug_zeelin-auto-ppt",
+          "slug": "zeelin-auto-ppt",
+          "name": "ZeeLin Auto-PPT",
+          "title": "自动化演示文稿生成助手",
+          "category": "design",
+          "source_url": "https://clawhub.ai/skills/zeelin-auto-ppt",
+          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-auto-ppt",
+          "is_free": true,
+          "requires_paid_api": false
+        },
+        "dimensions": {
+          "business_fit": 20.0,
+          "usability": 8.0,
+          "stability": 20,
+          "automation": 12.4,
+          "heat": 4.0,
+          "security": 5
+        },
+        "reasons": [
+          "包含可执行命令或自动化入口，可快速接入",
+          "具备明确输出结果定义，便于业务验收"
+        ],
+        "risks": [
+          "文档步骤描述较弱，首次接入可能需要二次梳理"
+        ]
+      },
+      {
+        "rank": 8,
         "score": 69.2,
-        "trend": "up",
-        "delta_rank_24h": 4,
+        "trend": "down",
+        "delta_rank_24h": -4,
         "skill": {
           "id": "slug_content-creator-cn",
           "slug": "content-creator-cn",
@@ -147,10 +276,43 @@
         ]
       },
       {
-        "rank": 5,
+        "rank": 9,
+        "score": 69.0,
+        "trend": "new",
+        "delta_rank_24h": 0,
+        "skill": {
+          "id": "slug_zeelin-social-autopublisher",
+          "slug": "zeelin-social-autopublisher",
+          "name": "ZeeLin Social AutoPublisher",
+          "title": "社媒内容自动发布助手",
+          "category": "marketing",
+          "source_url": "https://clawhub.ai/skills/zeelin-social-autopublisher",
+          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=zeelin-social-autopublisher",
+          "is_free": true,
+          "requires_paid_api": false
+        },
+        "dimensions": {
+          "business_fit": 20.0,
+          "usability": 8.0,
+          "stability": 20,
+          "automation": 15,
+          "heat": 4.0,
+          "security": 2
+        },
+        "reasons": [
+          "包含可执行命令或自动化入口，可快速接入",
+          "具备明确输出结果定义，便于业务验收"
+        ],
+        "risks": [
+          "文档步骤描述较弱，首次接入可能需要二次梳理",
+          "安全与权限说明较少，建议上线前补充审计"
+        ]
+      },
+      {
+        "rank": 10,
         "score": 68.7,
-        "trend": "up",
-        "delta_rank_24h": 4,
+        "trend": "down",
+        "delta_rank_24h": -5,
         "skill": {
           "id": "slug_agentic-workflow-automation",
           "slug": "agentic-workflow-automation",
@@ -173,167 +335,6 @@
         "reasons": [
           "包含可执行命令或自动化入口，可快速接入",
           "具备明确输出结果定义，便于业务验收"
-        ],
-        "risks": [
-          "文档步骤描述较弱，首次接入可能需要二次梳理",
-          "安全与权限说明较少，建议上线前补充审计"
-        ]
-      },
-      {
-        "rank": 6,
-        "score": 65.8,
-        "trend": "up",
-        "delta_rank_24h": 4,
-        "skill": {
-          "id": "slug_social-media-lead-generation",
-          "slug": "social-media-lead-generation",
-          "name": "社媒获客龙虾",
-          "title": "社媒线索转化助手",
-          "category": "marketing",
-          "source_url": "https://clawhub.ai/skills/social-media-lead-generation",
-          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=social-media-lead-generation",
-          "is_free": true,
-          "requires_paid_api": false
-        },
-        "dimensions": {
-          "business_fit": 20.0,
-          "usability": 14.0,
-          "stability": 18.2,
-          "automation": 7.6,
-          "heat": 4.0,
-          "security": 2
-        },
-        "reasons": [
-          "具备明确输出结果定义，便于业务验收"
-        ],
-        "risks": [
-          "文档步骤描述较弱，首次接入可能需要二次梳理",
-          "安全与权限说明较少，建议上线前补充审计"
-        ]
-      },
-      {
-        "rank": 7,
-        "score": 65.7,
-        "trend": "new",
-        "delta_rank_24h": 0,
-        "skill": {
-          "id": "ch_ai_data",
-          "slug": "ai-data-analysis",
-          "name": "智能报表龙虾",
-          "title": "AI 数据洞察与复盘",
-          "category": "data",
-          "source_url": "https://clawhub.ai/skills/ai-data-analysis",
-          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=ai-data-analysis",
-          "is_free": true,
-          "requires_paid_api": false
-        },
-        "dimensions": {
-          "business_fit": 20.0,
-          "usability": 14.0,
-          "stability": 18.1,
-          "automation": 7.6,
-          "heat": 4.0,
-          "security": 2
-        },
-        "reasons": [
-          "具备明确输出结果定义，便于业务验收"
-        ],
-        "risks": [
-          "文档步骤描述较弱，首次接入可能需要二次梳理",
-          "安全与权限说明较少，建议上线前补充审计"
-        ]
-      },
-      {
-        "rank": 8,
-        "score": 63.2,
-        "trend": "new",
-        "delta_rank_24h": 0,
-        "skill": {
-          "id": "slug_afrexai-lead-hunter",
-          "slug": "afrexai-lead-hunter",
-          "name": "线索猎手龙虾",
-          "title": "B2B 发现-评分-外联助手",
-          "category": "service",
-          "source_url": "https://clawhub.ai/skills/afrexai-lead-hunter",
-          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=afrexai-lead-hunter",
-          "is_free": true,
-          "requires_paid_api": false
-        },
-        "dimensions": {
-          "business_fit": 20.0,
-          "usability": 8.0,
-          "stability": 20,
-          "automation": 9.2,
-          "heat": 4.0,
-          "security": 2
-        },
-        "reasons": [
-          "包含可执行命令或自动化入口，可快速接入",
-          "具备明确输出结果定义，便于业务验收"
-        ],
-        "risks": [
-          "文档步骤描述较弱，首次接入可能需要二次梳理",
-          "安全与权限说明较少，建议上线前补充审计"
-        ]
-      },
-      {
-        "rank": 9,
-        "score": 63.0,
-        "trend": "new",
-        "delta_rank_24h": 0,
-        "skill": {
-          "id": "slug_oee-crm-intelligence",
-          "slug": "oee-crm-intelligence",
-          "name": "CRM情报龙虾",
-          "title": "联系人优先级评分助手",
-          "category": "service",
-          "source_url": "https://clawhub.ai/skills/oee-crm-intelligence",
-          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=oee-crm-intelligence",
-          "is_free": true,
-          "requires_paid_api": false
-        },
-        "dimensions": {
-          "business_fit": 14.0,
-          "usability": 8.0,
-          "stability": 20,
-          "automation": 15,
-          "heat": 4.0,
-          "security": 2
-        },
-        "reasons": [
-          "包含可执行命令或自动化入口，可快速接入"
-        ],
-        "risks": [
-          "文档步骤描述较弱，首次接入可能需要二次梳理",
-          "安全与权限说明较少，建议上线前补充审计"
-        ]
-      },
-      {
-        "rank": 10,
-        "score": 55.2,
-        "trend": "new",
-        "delta_rank_24h": 0,
-        "skill": {
-          "id": "slug_crm",
-          "slug": "crm",
-          "name": "客户管理龙虾",
-          "title": "CRM 客户跟进助手",
-          "category": "service",
-          "source_url": "https://clawhub.ai/skills/crm",
-          "download_url": "https://wry-manatee-359.convex.site/api/v1/download?slug=crm",
-          "is_free": true,
-          "requires_paid_api": false
-        },
-        "dimensions": {
-          "business_fit": 14.0,
-          "usability": 8.0,
-          "stability": 19.6,
-          "automation": 7.6,
-          "heat": 4.0,
-          "security": 2
-        },
-        "reasons": [
-          "基础能力完整，适合快速试点"
         ],
         "risks": [
           "文档步骤描述较弱，首次接入可能需要二次梳理",
