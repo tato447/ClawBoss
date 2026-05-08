@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-05-08T07:56:36+08:00",
+    "generated_at": "2026-05-08T11:42:14+08:00",
     "version": "v2",
     "day_key": "2026-05-08",
     "hourly_target_qualified": 10,
-    "scanned_this_run": 0,
+    "scanned_this_run": 1,
     "qualified_this_run": 0,
     "total_candidates_today": 18,
     "total_qualified": 10,
     "filtered_this_run": {
       "non_free": 0,
       "has_paid_api": 0,
-      "non_enterprise": 0,
+      "non_enterprise": 1,
       "non_executable": 0
     }
   },

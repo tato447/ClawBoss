@@ -69,7 +69,8 @@
     "zeelin-auto-ppt",
     "zeelin-claw-swarm",
     "zeelin-social-autopublisher",
-    "zeelin-us-iran-war-tracker-en"
+    "zeelin-us-iran-war-tracker-en",
+    "publish"
   ],
   "candidates": [
     {
@@ -601,5 +602,5 @@
       ]
     }
   ],
-  "last_run": "2026-05-08T07:56:36+08:00"
+  "last_run": "2026-05-08T11:42:14+08:00"
 }
